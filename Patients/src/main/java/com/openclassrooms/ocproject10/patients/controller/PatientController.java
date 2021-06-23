@@ -45,16 +45,16 @@ public class PatientController {
     
     @PostMapping(value = "/patient/validate")
     public ModelAndView validate(@Valid Patient patient, BindingResult result, Model model) {
-        ModelAndView mav = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
         if (!result.hasErrors()) {
             patientService.createPatient(patient);
             model.addAttribute("patientList", patientService.findAllPatients());
-            mav.setViewName("redirect:/patient/list");
+            modelAndView.setViewName("redirect:/patient/list");
             log.info("Add Patient " + patient.toString());
-            return mav;
+            return modelAndView;
         }
-        mav.setViewName("patient/add");
-        return mav;
+        modelAndView.setViewName("patient/add");
+        return modelAndView;
     }
 
     /*@GetMapping(value = "/patient/add")

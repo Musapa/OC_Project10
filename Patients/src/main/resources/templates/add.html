@@ -40,7 +40,31 @@
 	</nav>
 	
 	
-	
+	<div class="row">
+		<form action="#" th:action="@{/trade/validate}" th:object="${patientAdd}" method="post" class="form-horizontal" style="width: 100%">
+			<div class="form-group">
+				<label for="givenName" class="col-sm-2 control-label">Given Name</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{givenName}" id="givenName" placeholder="GivenName" class="col-4">
+					<p class="text-danger" th:if="${#fields.hasErrors('givenName')}" th:errors="*{givenName}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="familyName" class="col-sm-2 control-label">Family Name</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{familyName}" id="familyName" placeholder="FamilyName" class="col-4">
+					<p class="text-danger" th:if="${#fields.hasErrors('familyName')}" th:errors="*{familyName}"></p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+                <div class="col-sm-12">
+                    <a class="btn btn-danger btn-sm" href="/patient/list">Cancel</a>
+                    <input class="btn btn-primary btn-sm" type="submit" value="Save">
+                </div>
+            </div>
+		</form>
+	</div>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

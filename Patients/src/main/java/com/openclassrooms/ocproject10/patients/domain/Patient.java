@@ -17,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-@Table(name = "patients")
+@Table(name = "patient")
 public class Patient {
 
 	@Id
