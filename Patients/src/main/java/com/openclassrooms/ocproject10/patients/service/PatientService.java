@@ -8,4 +8,6 @@ public interface PatientService {
 
 	public List<Patient> findAllPatients();
 
+	Patient createPatient(Patient patient);
+
 }

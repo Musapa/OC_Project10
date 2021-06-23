@@ -38,52 +38,9 @@
 			</div>
 		</div>
 	</nav>
-
-	<div class="container col-md-6 mb-2">
-		<div class="row">
-			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patients">List of patients</div>
-			<table class="table table-bordered table-striped table-dark">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Given Name</th>
-						<th>Family Name</th>
-						<th>Date of Birth</th>
-						<th>Gender</th>
-						<th>Address</th>
-						<th>Phone</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<tr th:each="patient : ${patientList}">
-						<td style="width: 10%" th:text="${patient.id}"></td>
-						<td th:text="${patient.givenName}"></td>
-						<td th:text="${patient.familyName}"></td>
-						<td th:text="${patient.dob}"></td>
-						<td style="width: 25%" th:text="${patient.sex}"></td>
-						<td th:text="${patient.address}"></td>
-						<td th:text="${patient.phone}"></td>
-						<td style="width: 50px" class="text-center"><a
-							th:href="@{/patient/update/{id}(id=${patient.id})}">Edit</a>&nbsp;|&nbsp;
-							<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			
-			<a href="/patient/add" class="col-12 d-flex justify-content-center btn btn-lg btn-info mb-5 mt-3">Add new patient</a>
-		</div>
-	</div>
-
-	<style>
-		.list-patients {
-			font-family: "Lucida Console", "Courier New", monospace;
-			font-size: 30px;
-			font-weight: bold;
-			color: #17a2b8;
-		}
-	</style>
+	
+	
+	
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
