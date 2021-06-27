@@ -8,9 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,30 +25,44 @@ public class Patient {
     private Integer id;
 
     @Column(name = "givenName", nullable = false)
-    @NotBlank(message="Given name is mandatory.")
     @Size(min=1, max=30, message="Given name need to be between 1-30 characters.")
+    @NotBlank(message="Given name is mandatory.")
     private String givenName;
 
     @Column(name = "familyName", nullable = false)
-    @NotBlank(message="Family name is mandatory.")
     @Size(min=1, max=30, message="Family name need to be between 1-30 characters.")
+    @NotBlank(message="Family name is mandatory.")
     private String familyName;
 
     @NotNull(message = "Date of birth is mandatory.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
-    @NotNull(message = "Gender is mandatory.")
-    private char sex;
+    @NotBlank(message = "Gender is mandatory.")
+    @Pattern(regexp="\\b(Male|Female)\\b")
+    private String sex;
 
     @NotBlank(message="Home address is mandatory.")
     private String address;
     
     @NotNull(message="Phone number is mandatory.")
-    @DecimalMin("0.01")
+    @Pattern(regexp="^(0|[1-9][0-9]*)$")
     private String phone;
 
+    public Patient() {
+    	
+    }
     
+	public Patient(Integer id, String givenName, String familyName, LocalDate dob, String sex, String address, String phone) {
+		this.id = id;
+		this.givenName = givenName;
+		this.familyName = familyName;
+		this.dob = dob;
+		this.sex = sex;
+		this.address = address;
+		this.phone = phone;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -81,11 +95,11 @@ public class Patient {
 		this.dob = dob;
 	}
 
-	public char getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(char sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
