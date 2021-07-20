@@ -21,7 +21,7 @@ import com.openclassrooms.ocproject10.patients.service.PatientService;
 
 @Controller
 public class PatientController {
-
+	
 	@Autowired
 	private PatientService patientService;
 
@@ -45,10 +45,11 @@ public class PatientController {
 	public String validate(@Valid Patient patient, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			patientService.createPatient(patient);
-			log.info("LOG: Patient validate: id:" + patient.getId() + " familyName: " + patient.getFamilyName() + " givenName: " + patient.getGivenName());
+			log.info("LOG: Patient validate: id:" + patient.getId() + " givenName: " + patient.getGivenName() + " familyName: " + patient.getFamilyName());
 			return "redirect:/patient/list";
 		}
-		log.error("LOG: Patient Validate error: " + result.getErrorCount());
+		log.error("LOG: Patient Validate error: " + result.getErrorCount() + " errors");
+		
 		return "patient/add";
 	}
 	
@@ -72,7 +73,7 @@ public class PatientController {
 		patient.setId(id);
 		patientService.updatePatient(patient);
 		
-		log.info("LOG: Patient update: id:" + patient.getId() + " familyName: " + patient.getFamilyName() + " givenName: " + patient.getGivenName());
+		log.info("LOG: Patient update: id:" + patient.getId() + " givenName: " + patient.getGivenName() + " familyName: " + patient.getFamilyName());
 		return "redirect:/patient/list";
 	}
 
@@ -82,7 +83,7 @@ public class PatientController {
 		if (patient != null) {
 			patientService.deletePatientById(id);
 		}
-		log.info("LOG: Patient delete: id:" + patient.getId() + " familyName: " + patient.getFamilyName() + " givenName: " + patient.getGivenName());
+		log.info("LOG: Patient delete: id:" + patient.getId() + " givenName: " + patient.getGivenName() + " familyName: " + patient.getFamilyName());
 		return "redirect:/patient/list";
 	}	
     

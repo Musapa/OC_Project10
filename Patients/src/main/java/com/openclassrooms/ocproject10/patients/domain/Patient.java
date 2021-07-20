@@ -45,8 +45,8 @@ public class Patient {
     @NotBlank(message="Home address is mandatory.")
     private String address;
     
-    @NotNull(message="Phone number is mandatory.")
-    @Pattern(regexp="^(0|[1-9][0-9]*)$")
+    @NotBlank(message="Phone number is mandatory.")
+    @Pattern(regexp="^(([0-9]*)|(([0-9]*)\\.([0-9]*)))$")
     private String phone;
 
     public Patient() {
