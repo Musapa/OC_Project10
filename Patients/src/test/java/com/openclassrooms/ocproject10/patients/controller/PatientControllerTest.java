@@ -1,5 +1,6 @@
 package com.openclassrooms.ocproject10.patients.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -24,6 +25,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.ocproject10.patients.PatientsApplication;
 import com.openclassrooms.ocproject10.patients.domain.Patient;
 import com.openclassrooms.ocproject10.patients.repository.PatientRepository;
@@ -39,6 +42,9 @@ public class PatientControllerTest {
 	@Autowired
 	private WebApplicationContext webContext;
 
+	@Autowired
+	private ObjectMapper objectMapper;
+
 	@Before
 	public void setupMockmvc() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
@@ -47,20 +53,35 @@ public class PatientControllerTest {
 	@Autowired
 	private PatientRepository patientRepository;
 
-	private Patient patient;
+	// Putted static because of repeating @Before of createPatient() method on tests
+	static private Patient patient;
 
 	@Before
 	public void createPatient() {
-		patient = new Patient();
-		Patient patient = new Patient();
-		patient.setGivenName("Test_1");
-		patient.setFamilyName("TestFamily_1");
-		patient.setDob(LocalDate.of(Integer.parseInt("1990"), Integer.parseInt("04"), Integer.parseInt("21")));
-		patient.setSex("Male");
-		patient.setAddress("TestAddress_1");
-		patient.setPhone("033111111");
+		if (patient == null) {
 
-		patient = patientRepository.save(patient);
+			patient = new Patient();
+
+			Patient patient = new Patient();
+			patient.setGivenName("Test_1");
+			patient.setFamilyName("TestNone");
+			patient.setDob(LocalDate.of(Integer.parseInt("1966"), Integer.parseInt("12"), Integer.parseInt("31")));
+			patient.setSex("Female");
+			patient.setAddress("Brookside St");
+			patient.setPhone("100-222-3333");
+
+			patient = patientRepository.save(patient);
+
+			Patient patient2 = new Patient();
+			patient2.setGivenName("Test_2");
+			patient2.setFamilyName("TestBorderline");
+			patient2.setDob(LocalDate.of(Integer.parseInt("1945"), Integer.parseInt("06"), Integer.parseInt("24")));
+			patient2.setSex("Male");
+			patient2.setAddress("High St");
+			patient2.setPhone("200-333-4444");
+
+			patient2 = patientRepository.save(patient2);
+		}
 	}
 
 	@Test
@@ -85,16 +106,62 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void addPatientValidate() throws Exception {
-		MvcResult result = mockMvc
-				.perform(post("/patient/validate").param("id", "10").param("givenName", "Test_2")
-						.param("familyName", "TestFamily_2").param("dob", "1990-04-21").param("sex", "Male")
-						.param("address", "TestAddress_2").param("phone", "033222222"))
-				.andExpect(view().name("redirect:/patient/list")).andExpect(status().is3xxRedirection())
-				.andExpect(model().errorCount(0)).andReturn();
+	public void addPatientSaveValid() throws Exception {
+		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
+				.param("dob", "2004-06-18").param("sex", "Male").param("address", "Club Road")
+				.param("phone", "300-444-5555")).andExpect(view().name("redirect:/patient/list"))
+				.andExpect(status().is3xxRedirection()).andExpect(model().errorCount(0)).andReturn();
+	}
+
+	@Test
+	public void addPatientSaveInvalid() throws Exception {
+		// invalid date
+		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
+				.param("dob", "invalid date").param("sex", "Male").param("address", "Club Road")
+				.param("phone", "300-444-5555")).andExpect(view().name("patient/add")).andExpect(status().isOk())
+				.andExpect(model().errorCount(1)).andReturn();
+	}
+
+	@Test
+	public void updatePatientForm() throws Exception {
+		MvcResult result = mockMvc.perform(get("/patient/update/2")).andExpect(view().name("patient/update"))
+				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
 
 		String content = result.getResponse().getContentAsString();
 		System.out.println("Content" + content);
+	}
+
+	@Test
+	public void updatePatientValid() throws Exception {
+		mockMvc.perform(post("/patient/update/2").param("givenName", "Test_2").param("familyName", "TestEarlyOnset")
+				.param("dob", "2002-06-28").param("sex", "Female").param("address", " Valley Dr")
+				.param("phone", "400-555-6666")).andExpect(view().name("redirect:/patient/list"))
+				.andExpect(status().is3xxRedirection()).andExpect(model().errorCount(0)).andReturn();
+	}
+
+	@Test
+	public void updatePatientInvalid() throws Exception {
+		// invalid gender
+		mockMvc.perform(post("/patient/update/2").param("givenName", "Test_2").param("familyName", "TestEarlyOnset")
+				.param("dob", "2002-06-28").param("sex", "Invalid gender").param("address", " Valley Dr")
+				.param("phone", "400-555-6666")).andExpect(view().name("patient/update")).andExpect(status().isOk())
+				.andExpect(model().errorCount(1)).andReturn();
+	}
+
+	@Test
+	public void deletePatient() throws Exception {
+		mockMvc.perform(get("/patient/delete/1")).andExpect(view().name("redirect:/patient/list"))
+				.andExpect(model().errorCount(0)).andExpect(status().isFound());
+	}
+
+	// TODO Why patient Test_3 (who is added by method addPatientSaveValid()) is not counting on this list?
+	@Test
+	public void apiGetAllPatients() throws Exception {
+		MvcResult result = mockMvc.perform(get("/api/patient/list")).andExpect(status().isOk()).andReturn();
+		String content = result.getResponse().getContentAsString();
+		List<Patient> patients = objectMapper.readValue(content, new TypeReference<List<Patient>>() {
+		});
+		assertEquals("There should be 1 patient because Test_1 patient is deleted", 1, patients.size());
 	}
 
 }

@@ -40,12 +40,12 @@ public class PatientController {
 		log.info("LOG: Add patient view");
 		return "patient/add";
 	}
-
-	@PostMapping("/patient/validate")
-	public String validate(@Valid Patient patient, BindingResult result, Model model) {
+	
+	@PostMapping("/patient/save")
+	public String save(@Valid Patient patient, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			patientService.createPatient(patient);
-			log.info("LOG: Patient validate: id:" + patient.getId() + " givenName: " + patient.getGivenName() + " familyName: " + patient.getFamilyName());
+			log.info("LOG: Patient save: id:" + patient.getId() + " givenName: " + patient.getGivenName() + " familyName: " + patient.getFamilyName());
 			return "redirect:/patient/list";
 		}
 		log.error("LOG: Patient Validate error: " + result.getErrorCount() + " errors");
@@ -87,8 +87,7 @@ public class PatientController {
 		return "redirect:/patient/list";
 	}	
     
-
-    @GetMapping(value = "/api/patient/list/", produces = "application/json")
+    @GetMapping(value = "/api/patient/list", produces = "application/json")
 	public ResponseEntity<List<Patient>> getPatientList() {
 		return ResponseEntity.status(HttpStatus.OK).body(patientService.findAllPatients());
 	}

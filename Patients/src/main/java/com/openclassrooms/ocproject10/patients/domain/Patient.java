@@ -46,7 +46,6 @@ public class Patient {
     private String address;
     
     @NotBlank(message="Phone number is mandatory.")
-    @Pattern(regexp="^(([0-9]*)|(([0-9]*)\\.([0-9]*)))$")
     private String phone;
 
     public Patient() {
