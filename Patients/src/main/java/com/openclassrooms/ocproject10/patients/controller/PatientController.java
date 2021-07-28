@@ -44,8 +44,8 @@ public class PatientController {
 	@PostMapping("/patient/save")
 	public String save(@Valid Patient patient, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
-			patientService.createPatient(patient);
-			log.info("LOG: Patient save: id:" + patient.getId() + " givenName: " + patient.getGivenName() + " familyName: " + patient.getFamilyName());
+			Patient savedPatient = patientService.createPatient(patient);
+			log.info("LOG: Patient save: id:" + savedPatient.getId() + " givenName: " + savedPatient.getGivenName() + " familyName: " + patient.getFamilyName());
 			return "redirect:/patient/list";
 		}
 		log.error("LOG: Patient Validate error: " + result.getErrorCount() + " errors");

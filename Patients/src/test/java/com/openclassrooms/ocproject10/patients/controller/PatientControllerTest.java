@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -37,7 +35,6 @@ import com.openclassrooms.ocproject10.patients.repository.PatientRepository;
 @SpringBootTest(classes = PatientsApplication.class)
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = Replace.ANY)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PatientControllerTest {
 
 	private MockMvc mockMvc;
@@ -88,7 +85,7 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test1_GetAllPatients() throws Exception {
+	public void getAllPatients() throws Exception {
 		List<Patient> patientList = new ArrayList<>();
 		patientList.add(patient);
 
@@ -100,7 +97,7 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test2_AddPatientForm() throws Exception {
+	public void addPatientForm() throws Exception {
 		MvcResult result = mockMvc.perform(get("/patient/add")).andExpect(view().name("patient/add"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
 
@@ -109,15 +106,12 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test3_AddPatientSaveValid() throws Exception {
-		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
-				.param("dob", "2004-06-18").param("sex", "Male").param("address", "Club Road")
-				.param("phone", "300-444-5555")).andExpect(view().name("redirect:/patient/list"))
-				.andExpect(status().is3xxRedirection()).andExpect(model().errorCount(0)).andReturn();
+	public void addPatientSaveValid() throws Exception {
+		addPatient3();
 	}
 
 	@Test
-	public void test4_AddPatientSaveInvalid() throws Exception {
+	public void addPatientSaveInvalid() throws Exception {
 		// invalid date
 		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
 				.param("dob", "invalid date").param("sex", "Male").param("address", "Club Road")
@@ -126,7 +120,7 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test5_UpdatePatientForm() throws Exception {
+	public void updatePatientForm() throws Exception {
 		MvcResult result = mockMvc.perform(get("/patient/update/2")).andExpect(view().name("patient/update"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
 
@@ -135,7 +129,7 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test6_UpdatePatientValid() throws Exception {
+	public void updatePatientValid() throws Exception {
 		mockMvc.perform(post("/patient/update/2").param("givenName", "Test_2").param("familyName", "TestEarlyOnset")
 				.param("dob", "2002-06-28").param("sex", "Female").param("address", " Valley Dr")
 				.param("phone", "400-555-6666")).andExpect(view().name("redirect:/patient/list"))
@@ -143,7 +137,7 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test7_UpdatePatientInvalid() throws Exception {
+	public void updatePatientInvalid() throws Exception {
 		// invalid gender
 		mockMvc.perform(post("/patient/update/2").param("givenName", "Test_2").param("familyName", "TestEarlyOnset")
 				.param("dob", "2002-06-28").param("sex", "Invalid gender").param("address", " Valley Dr")
@@ -152,13 +146,13 @@ public class PatientControllerTest {
 	}
 
 	@Test
-	public void test8_DeletePatient() throws Exception {
-		mockMvc.perform(get("/patient/delete/3")).andExpect(view().name("redirect:/patient/list"))
-				.andExpect(model().errorCount(0)).andExpect(status().isFound());
+	public void deletePatient() throws Exception {
+		addPatient3();
+		deletePatient3();
 	}
 
 	@Test
-	public void test9_ApiGetAllPatients() throws Exception {
+	public void apiGetAllPatients() throws Exception {
 		MvcResult result = mockMvc.perform(get("/api/patient/list")).andExpect(status().isOk()).andReturn();
 		String content = result.getResponse().getContentAsString();
 		List<Patient> patients = objectMapper.readValue(content, new TypeReference<List<Patient>>() {
@@ -166,4 +160,15 @@ public class PatientControllerTest {
 		assertEquals("There should be 2 patients because Test_3 patient is deleted", 2, patients.size());
 	}
 
+	private void addPatient3() throws Exception {
+		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
+				.param("dob", "2004-06-18").param("sex", "Male").param("address", "Club Road")
+				.param("phone", "300-444-5555")).andExpect(view().name("redirect:/patient/list"))
+				.andExpect(status().is3xxRedirection()).andExpect(model().errorCount(0)).andReturn();
+	}
+
+	private void deletePatient3() throws Exception {
+		mockMvc.perform(get("/patient/delete/3")).andExpect(view().name("redirect:/patient/list"))
+				.andExpect(model().errorCount(0)).andExpect(status().isFound());
+	}
 }
