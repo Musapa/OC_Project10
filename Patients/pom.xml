@@ -10,5 +10,5 @@
 	<artifactId>Patients</artifactId>
 	<packaging>jar</packaging>
 	<name>Patients</name>
-	<description>Microservice endpoint calls to set test patient demographics</description>
+	<description>Patient maven module project</description>
 </project>

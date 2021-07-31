@@ -107,7 +107,13 @@ public class PatientControllerTest {
 
 	@Test
 	public void addPatientSaveValid() throws Exception {
-		addPatient3();
+		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
+				.param("dob", "2002-06-28").param("sex", "Male").param("address", "Club Road")
+				.param("phone", "300-444-5555")).andExpect(view().name("redirect:/patient/list")).andExpect(status().is3xxRedirection())
+				.andExpect(model().errorCount(0)).andReturn();
+		
+		mockMvc.perform(get("/patient/delete/3")).andExpect(view().name("redirect:/patient/list"))
+		.andExpect(model().errorCount(0)).andExpect(status().isFound());
 	}
 
 	@Test
@@ -147,8 +153,8 @@ public class PatientControllerTest {
 
 	@Test
 	public void deletePatient() throws Exception {
-		addPatient3();
-		deletePatient3();
+		mockMvc.perform(get("/patient/delete/1")).andExpect(view().name("redirect:/patient/list"))
+				.andExpect(model().errorCount(0)).andExpect(status().isFound());
 	}
 
 	@Test
@@ -157,18 +163,8 @@ public class PatientControllerTest {
 		String content = result.getResponse().getContentAsString();
 		List<Patient> patients = objectMapper.readValue(content, new TypeReference<List<Patient>>() {
 		});
-		assertEquals("There should be 2 patients because Test_3 patient is deleted", 2, patients.size());
+		assertEquals("There should be 1 patients because Test_1 patient is deleted", 1, patients.size());
 	}
 
-	private void addPatient3() throws Exception {
-		mockMvc.perform(post("/patient/save").param("givenName", "Test_3").param("familyName", "TestInDanger")
-				.param("dob", "2004-06-18").param("sex", "Male").param("address", "Club Road")
-				.param("phone", "300-444-5555")).andExpect(view().name("redirect:/patient/list"))
-				.andExpect(status().is3xxRedirection()).andExpect(model().errorCount(0)).andReturn();
-	}
 
-	private void deletePatient3() throws Exception {
-		mockMvc.perform(get("/patient/delete/3")).andExpect(view().name("redirect:/patient/list"))
-				.andExpect(model().errorCount(0)).andExpect(status().isFound());
-	}
 }
