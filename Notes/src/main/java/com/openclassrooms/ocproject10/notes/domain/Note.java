@@ -21,7 +21,7 @@ public class Note {
 	@Field("note")
 	@NotBlank(message = "Note field is mandatory.")
 	private String note;
-
+	
 	public Note() {
 
 	}

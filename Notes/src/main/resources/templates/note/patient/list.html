@@ -34,8 +34,8 @@
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="/patient/list">Patients</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost:8082/note/patient/list">Notes</a></li>
+						aria-current="page" href="http://localhost:8081/patient/list">Patients</a></li>
+					<li class="nav-item"><a class="nav-link" href="note/patient/list">Notes</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Reports</a></li>
 				</ul>
 			</div>
@@ -72,8 +72,8 @@
 						<td th:text="${patient.address}"></td>
 						<td th:text="${patient.phone}"></td>
 						<td style="width: 12%" class="text-center">
-							<a th:href="@{/patient/update/{id}(id=${patient.id})}"></i>Edit</a>&nbsp;|&nbsp;
-							<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
+							<a th:href="@{/note/add/{patientId}(patientId=${patient.id})}">Add a Note</a>&nbsp;|&nbsp;
+							<a th:href="@{/note/list/{patientId}(patientId=${patient.id})}">View Patient's Notes</a>
 						</td>
 					</tr>
 				</tbody>

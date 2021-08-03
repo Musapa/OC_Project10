@@ -1,4 +1,4 @@
-package com.openclassrooms.ocproject10.repository;
+package com.openclassrooms.ocproject10.notes.repository;
 
 import java.util.List;
 import java.util.Optional;

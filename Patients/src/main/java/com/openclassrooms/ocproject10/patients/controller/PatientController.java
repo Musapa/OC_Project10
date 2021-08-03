@@ -48,7 +48,7 @@ public class PatientController {
 			log.info("LOG: Patient save: id:" + savedPatient.getId() + " givenName: " + savedPatient.getGivenName() + " familyName: " + patient.getFamilyName());
 			return "redirect:/patient/list";
 		}
-		log.error("LOG: Patient Validate error: " + result.getErrorCount() + " errors");
+		log.error("LOG: Patient Save error: " + result.getErrorCount() + " errors");
 		
 		return "patient/add";
 	}

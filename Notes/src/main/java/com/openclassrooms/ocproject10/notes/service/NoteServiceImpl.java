@@ -1,4 +1,4 @@
-package com.openclassrooms.ocproject10.service;
+package com.openclassrooms.ocproject10.notes.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.ocproject10.notes.domain.Note;
-import com.openclassrooms.ocproject10.repository.NoteRepository;
+import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
 @Service("noteService")
 public class NoteServiceImpl implements NoteService {

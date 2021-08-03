@@ -1,4 +1,4 @@
-package com.openclassrooms.ocproject10.service;
+package com.openclassrooms.ocproject10.notes.service;
 
 import java.util.List;
 
