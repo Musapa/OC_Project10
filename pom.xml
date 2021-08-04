@@ -19,6 +19,7 @@
 	<modules>
 		<module>Patients</module>
 		<module>Notes</module>
+		<module>Reports</module>
 	</modules>
 
 	<properties>

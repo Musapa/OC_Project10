@@ -24,7 +24,7 @@ public class NoteController {
 
 	@Autowired
 	private NoteService noteService;
-
+	
 	private static final Logger log = LoggerFactory.getLogger(NoteController.class);
 
 	@GetMapping("/note/list/{patientId}")

@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "note")
 public class Note {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

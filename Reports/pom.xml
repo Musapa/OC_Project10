@@ -7,15 +7,20 @@
 		<artifactId>OC_Project10</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>Notes</artifactId>
+	<artifactId>Reports</artifactId>
 	<packaging>jar</packaging>
-	<name>Notes</name>
-	<description>Notes maven module project</description>
+	<name>Reports</name>
+	<description>Reports maven module project</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.openclassrooms</groupId>
 			<artifactId>Patients</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.openclassrooms</groupId>
+			<artifactId>Notes</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
