@@ -1,30 +1,29 @@
 package com.openclassrooms.ocproject10.notes.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.service.NoteService;
+import com.openclassrooms.ocproject10.patients.domain.Patient;
+import com.openclassrooms.ocproject10.patients.service.PatientService;
 
 @RestController
 public class NoteController {
 
 	@Autowired
 	private NoteService noteService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(NoteController.class);
 
 	@GetMapping("/note/list/{patientId}")
@@ -39,7 +38,7 @@ public class NoteController {
 	}
 
 	@GetMapping("/note/add/{patientId}")
-	public String addPatient(@PathVariable("patientId") Integer patientId, Model model) {
+	public String addNote(@PathVariable("patientId") Integer patientId, Model model) {
 		if (patientId != null) {
 			Note note = new Note();
 			note.setPatientId(patientId);
@@ -50,7 +49,7 @@ public class NoteController {
 	}
 
 	@PostMapping("/note/save/{patientId}")
-	public String save(@PathVariable("patientId") Integer patientId, @Valid Note note, BindingResult result,
+	public String saveNote(@PathVariable("patientId") Integer patientId, @Valid Note note, BindingResult result,
 			Model model) {
 		if (patientId != null) {
 			if (!result.hasErrors()) {
@@ -61,12 +60,7 @@ public class NoteController {
 			}
 		}
 		log.error("LOG: Note Save error: " + result.getErrorCount() + " errors");
-
 		return "note/add";
 	}
 
-	@GetMapping(value = "/api/note/list/{patientId}", produces = "application/json")
-	public ResponseEntity<List<Note>> getPatientList(@PathVariable("patientId") Integer patientId) {
-		return ResponseEntity.status(HttpStatus.OK).body(noteService.findAllNotesByPatientId(patientId));
-	}
 }

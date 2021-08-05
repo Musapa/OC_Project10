@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "note")
+@Document(collection = "Note")
 public class Note {
 
 	

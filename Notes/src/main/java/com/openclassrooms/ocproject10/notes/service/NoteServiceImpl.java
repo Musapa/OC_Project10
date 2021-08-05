@@ -11,7 +11,7 @@ import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
 @Service("noteService")
 public class NoteServiceImpl implements NoteService {
-
+	
 	@Autowired
 	private NoteRepository noteRepository;
 
@@ -24,8 +24,7 @@ public class NoteServiceImpl implements NoteService {
 	public Note findNoteById(Integer id) {
 		Optional<Note> noteOptional = noteRepository.findById(id);
 		if (noteOptional.isPresent()) {
-			Note note = noteOptional.get();
-			return note;
+			return noteOptional.get();
 		}
 		return null;
 	}
@@ -44,10 +43,11 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public void deleteNotetById(Integer id) {
+	public void deleteNote(Integer id) {
 		Optional<Note> noteOptional = noteRepository.findById(id);
 		if (noteOptional.isPresent()) {
 			noteRepository.delete(noteOptional.get());
 		}
 	}
+	
 }

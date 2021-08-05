@@ -19,7 +19,7 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				th:src="@{/images/logo-01.png}" alt="" width="60" height="68"
-				class="d-inline-block align-text-center"> Mediascreen
+				class="d-inline-block"> Mediascreen
 			</a>
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -30,10 +30,10 @@
 
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="/patient/list">Patients</a></li>
+					<li class="nav-item"><a class="nav-link"
+						aria-current="page" href="http://localhost:8081/patient/list">Patients</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Notes</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost:8080/patient/list">Reports</a></li>
+					<li class="nav-item"><a class="nav-link active" href="/patient/list">Reports</a></li>
 				</ul>
 			</div>
 		</div>
@@ -41,7 +41,7 @@
 
 	<div class="container col-md-12 mb-2">
 		<div class="row">
-			<form action="#" th:action="@{/patient/update/{id}(id=${patient.id})}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
+			<form action="#" th:action="@{/patient/save}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
 					<label for="givenName" class="col-sm-2 control-label">Given Name</label>
 					<div class="col-sm-12">
@@ -62,7 +62,7 @@
 						<input type="text" th:field="*{dob}" id="dob" placeholder="Date of Birth: yyyy-MM-dd" class="col-4">
 						<p class="text-danger" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></p>
 					</div>
-				</div>
+				</div>				
 				
 				<div class="form-group">
 					<label for="sex" class="col-sm-2 control-label">Gender</label>
@@ -71,7 +71,7 @@
 						<label class="checkbox-inline"><input type="radio" th:field="*{sex}" th:value="Female">Female</label>
 						<p class="text-danger" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"></p>
 					</div>
-				</div>	
+				</div>			
         		
 				<div class="form-group">
 					<label for="address" class="col-sm-2 control-label">Address</label>
@@ -89,14 +89,14 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-					<input type="hidden" th:field="*{id}">
-					<a class="btn btn-danger btn-sm" href="/patient/list">Cancel</a>
-					<input class="btn btn-primary btn-sm" type="submit" value="Update">
+						<a class="btn btn-danger btn-sm" href="/patient/list">Cancel</a> 
+						<input class="btn btn-primary btn-sm" type="submit" value="Save">
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>

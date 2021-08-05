@@ -14,6 +14,6 @@ public interface NoteService {
 
 	void updateNote(Note note);
 
-	void deleteNotetById(Integer id);
+	void deleteNote(Integer id);
 
 }

@@ -5,34 +5,34 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.ocproject10.patients.controller.PatientController;
 import com.openclassrooms.ocproject10.patients.domain.Patient;
-import com.openclassrooms.ocproject10.reports.service.ReportServiceImpl;
+import com.openclassrooms.ocproject10.reports.service.ReportService;
 
-@Controller
+@RestController
 public class ReportController {
 	
-	@Autowired
-	private ReportServiceImpl reportServiceImpl;
-
-	private static final Logger log = LoggerFactory.getLogger(ReportController.class);
+	static public String PATIENTSURL = "http://localhost:8081/"; // constant on capital letters
 	
-	/* GET a list of patients */
-	@GetMapping("/report/patientList")
-	public String getAllPatients(Model model) {
-		model.addAttribute("patientList", reportServiceImpl.findAllPatients());
-		log.info("LOG: Number of patients on list: " + reportServiceImpl.findAllPatients().size());
-		return "report/patientList";
-	}
-    
-    @GetMapping(value = "/api/report/patientList", produces = "application/json")
-	public ResponseEntity<List<Patient>> getPatientList() {
-		return ResponseEntity.status(HttpStatus.OK).body(reportServiceImpl.findAllPatients());
+	private static final Logger log = LoggerFactory.getLogger(PatientController.class);
+
+	@Autowired
+	ReportService reportService;
+	
+	@GetMapping("/patient/list")
+	public List<Patient> getAllPatients(Model model) {
+		model.addAttribute("patientList", reportService.getAllPatients());
+		log.info("LOG: Number of patients on list: " + reportService.getAllPatients().size());
+		return reportService.getAllPatients();
 	}
 
+	@RequestMapping("api/patient/list")
+	public List<Patient> getAllPatientsApi() {
+		return reportService.getAllPatientsApi();
+	}
 }
