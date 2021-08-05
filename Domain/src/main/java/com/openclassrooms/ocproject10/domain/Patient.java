@@ -1,4 +1,4 @@
-package com.openclassrooms.ocproject10.shared.domain;
+package com.openclassrooms.ocproject10.domain;
 
 import java.time.LocalDate;
 
@@ -15,15 +15,52 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Entity
+@Table(name = "patient")
 public class Patient {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@Column(name = "givenName", nullable = false)
+	@Size(min = 1, max = 30, message = "Given name need to be between 1-30 characters.")
+	@NotBlank(message = "Given name is mandatory.")
 	private String givenName;
+
+	@Column(name = "familyName", nullable = false)
+	@Size(min = 1, max = 30, message = "Family name need to be between 1-30 characters.")
+	@NotBlank(message = "Family name is mandatory.")
 	private String familyName;
+
+	@NotNull(message = "Date of birth is mandatory.")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dob;
+
+	@NotBlank(message = "Gender is mandatory.")
+	@Pattern(regexp = "\\b(Male|Female)\\b")
 	private String sex;
+
+	@NotBlank(message = "Home address is mandatory.")
 	private String address;
+
+	@NotBlank(message = "Phone number is mandatory.")
 	private String phone;
+
+	public Patient() {
+
+	}
+
+	public Patient(Integer id, String givenName, String familyName, LocalDate dob, String sex, String address,
+			String phone) {
+		this.id = id;
+		this.givenName = givenName;
+		this.familyName = familyName;
+		this.dob = dob;
+		this.sex = sex;
+		this.address = address;
+		this.phone = phone;
+	}
 
 	public Integer getId() {
 		return id;

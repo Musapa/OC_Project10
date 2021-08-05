@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.ocproject10.patients.domain.Patient;
+import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.patients.repository.PatientRepository;
 
 @Service("patientService")

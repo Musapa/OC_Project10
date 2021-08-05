@@ -28,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.ocproject10.patients.PatientsApplication;
-import com.openclassrooms.ocproject10.patients.domain.Patient;
+import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.patients.repository.PatientRepository;
 
 @RunWith(SpringRunner.class)

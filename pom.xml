@@ -21,6 +21,7 @@
 		<module>Notes</module>
 		<module>Reports</module>
 		<module>Shared</module>
+		<module>Domain</module>
 	</modules>
 
 	<properties>

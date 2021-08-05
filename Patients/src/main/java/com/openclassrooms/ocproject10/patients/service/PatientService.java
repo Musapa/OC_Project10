@@ -1,8 +1,7 @@
 package com.openclassrooms.ocproject10.patients.service;
 
 import java.util.List;
-
-import com.openclassrooms.ocproject10.patients.domain.Patient;
+import com.openclassrooms.ocproject10.domain.Patient;
 
 public interface PatientService {
 
