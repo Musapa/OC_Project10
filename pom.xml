@@ -20,6 +20,7 @@
 		<module>Patients</module>
 		<module>Notes</module>
 		<module>Reports</module>
+		<module>Shared</module>
 	</modules>
 
 	<properties>

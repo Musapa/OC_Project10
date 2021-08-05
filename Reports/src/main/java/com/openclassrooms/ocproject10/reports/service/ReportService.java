@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.openclassrooms.ocproject10.patients.domain.Patient;
+import com.openclassrooms.ocproject10.shared.domain.Patient;
 import com.openclassrooms.ocproject10.reports.controller.ReportController;
 
 @Service("reportService")

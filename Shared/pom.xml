@@ -7,16 +7,8 @@
 		<artifactId>OC_Project10</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>Patients</artifactId>
+	<artifactId>Shared</artifactId>
 	<packaging>jar</packaging>
-	<name>Patients</name>
-	<description>Patient maven module project</description>
-
-	<dependencies>
-		<dependency>
-			<groupId>com.openclassrooms</groupId>
-			<artifactId>Shared</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
+	<name>Shared</name>
+	<description>Shared maven module project</description>
 </project>

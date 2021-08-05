@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.ocproject10.patients.controller.PatientController;
-import com.openclassrooms.ocproject10.patients.domain.Patient;
+import com.openclassrooms.ocproject10.shared.domain.Patient;
 import com.openclassrooms.ocproject10.reports.service.ReportService;
 
 @RestController
@@ -19,7 +18,7 @@ public class ReportController {
 	
 	static public String PATIENTSURL = "http://localhost:8081/"; // constant on capital letters
 	
-	private static final Logger log = LoggerFactory.getLogger(PatientController.class);
+	private static final Logger log = LoggerFactory.getLogger(ReportController.class);
 
 	@Autowired
 	ReportService reportService;

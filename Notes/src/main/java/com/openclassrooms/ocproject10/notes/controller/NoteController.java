@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.service.NoteService;
-import com.openclassrooms.ocproject10.patients.domain.Patient;
-import com.openclassrooms.ocproject10.patients.service.PatientService;
 
 @RestController
 public class NoteController {
