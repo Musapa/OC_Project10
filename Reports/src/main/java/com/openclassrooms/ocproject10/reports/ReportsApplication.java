@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@ComponentScan({ "com.openclassrooms.ocproject10.patients"})
-@EnableJpaRepositories(basePackages = { "com.openclassrooms.ocproject10.patients.repository" })
-@EntityScan("com.openclassrooms.ocproject10.patients.domain")
+@ComponentScan({"com.openclassrooms.ocproject10.reports", "com.openclassrooms.ocproject10.domain"})
+@EnableJpaRepositories(basePackages = {"com.openclassrooms.ocproject10.patients.repository"})
+@EntityScan("com.openclassrooms.ocproject10.domain")
 public class ReportsApplication {
 
 	public static void main(String[] args) {
