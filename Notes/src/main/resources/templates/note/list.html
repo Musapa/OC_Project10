@@ -1,37 +1,98 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <title>Note List</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Note List</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
 </head>
 <body>
-<div class="container" style=" margin-left: 30px;">
-    <div class="row"><h2>Patient's Note List</h2></div>
-    <div class="row">
-        <a th:href="@{'/note/add/' + ${patientId}}" class="btn btn-primary btn-sm">Add New Note</a>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Note</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="note : ${noteList}">
-                <td style="width: 10%" th:text="${note.id}"></td>
-                <td style="word-break: break-all;" th:text="${note.note}"></td>
-                <td style="width: 50px" class="text-center">
-                    <a th:href="@{/note/delete/{id}(id=${note.id})}">Delete</a>&nbsp;|&nbsp;
-                    <a th:href="@{/note/update/{id}(id=${note.id})}">Update</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#"> <img
+				th:src="@{/images/logo-01.png}" alt="" width="60" height="68"
+				class="d-inline-block align-text-center"> Mediascreen
+			</a>
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarToggler" aria-controls="navbarToggler"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarToggler">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/patient/list">Patients</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Notes</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="http://localhost:8080/patient/list">Reports</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container col-md-6 mb-2">
+		<div class="row">
+			<div
+				class="col-12 d-flex justify-content-center mt-3 mb-3 list-patients">List
+				of notes</div>
+			<table class="table table-bordered">
+				<thead>
+					<tr class="table-success">
+						<th class="text-center">Id</th>
+						<th class="text-center">Note</th>
+						<th class="text-center">Action</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:if="${noteList.empty}">
+						<td>No Notes on a list</td>
+					</tr>
+					<tr th:each="note : ${noteList}">
+						<td style="width: 10%" th:text="${note.id}"></td>
+						<td th:text="${note.note}"></td>
+						<td style="width: 12%" class="text-center"><a
+							th:href="@{/note/update/{id}(id=${note.id})}"></i>Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/note/delete/{id}(id=${note.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<a th:href="@{'/note/add/' + ${patientId}}" class="col-12 d-flex justify-content-center btn btn-lg btn-success mb-5 mt-3">Add New Note</a>
+		</div>
+	</div>
+
+	<style>
+		.list-patients {
+			font-family: "Lucida Console", "Courier New", monospace;
+			font-size: 30px;
+			font-weight: bold;
+			color: rgb(167, 199, 171);
+			}
+	</style>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+		crossorigin="anonymous"></script>
 </body>
+
 </html>
