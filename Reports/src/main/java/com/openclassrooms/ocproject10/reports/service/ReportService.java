@@ -3,6 +3,7 @@ package com.openclassrooms.ocproject10.reports.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -16,20 +17,16 @@ import com.openclassrooms.ocproject10.reports.controller.ReportController;
 @Service("reportService")
 public class ReportService {
 	
-	@Autowired
-	private RestTemplate restTemplate;
+	@Bean
+	public RestTemplate restTemplateReport() {
+	    return new RestTemplate();
+	}
 	
 	@Autowired
 	private Environment env;
-	
+		
 	public List<Patient> getAllPatients() {
-		ResponseEntity<List<Patient>> response = restTemplate
-				.exchange(getPatientsUrl() + "patient/list", HttpMethod.GET, null,new ParameterizedTypeReference<List<Patient>>() {});
-		return response.getBody();
-	}
-	
-	public List<Patient> getAllPatientsApi() {
-		ResponseEntity<List<Patient>> response = restTemplate
+		ResponseEntity<List<Patient>> response = restTemplateReport()
 				.exchange(getPatientsUrl() + "api/patient/list", HttpMethod.GET, null,new ParameterizedTypeReference<List<Patient>>() {});
 		return response.getBody();
 	}

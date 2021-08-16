@@ -2,18 +2,16 @@ package com.openclassrooms.ocproject10.notes.service;
 
 import java.util.List;
 
-import com.openclassrooms.ocproject10.notes.domain.Note;
+import com.openclassrooms.ocproject10.domain.Patient;
+import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 
 public interface NoteService {
 
-	List<Note> findAllNotesByPatientId(int patientId);
+	List<Patient> getAllPatients();
+	
+	List<PatientNote> findAllNotesByPatientId(String patientId);
 
-	Note findNoteById(Integer id);
-
-	Note createNote(Note note);
-
-	void updateNote(Note note);
-
-	void deleteNote(Integer id);
-
+	PatientNote findNoteById(String patientId);
+	
+	PatientNote createNote(PatientNote note);
 }

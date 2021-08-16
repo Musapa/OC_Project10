@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +14,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				th:src="@{/images/logo-01.png}" alt="" width="60" height="68"
@@ -30,22 +29,21 @@
 
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="/patient/list">Patients</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Notes</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost:8081/patient/list">Patients</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/patient/list">Notes</a></li>
 					<li class="nav-item"><a class="nav-link" href="http://localhost:8080/patient/list">Reports</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-
+	
 	<div class="container col-md-12 mb-2">
 		<div class="row">
-			<form action="#" th:action="@{/note/save/{patientId}(patientId=${note.patientId})}" method="post" class="form-horizontal" style="width: 100%">
+			<form action="#" th:action="@{/note/save/{patientId}(patientId=${patientNote.patientId})}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
 					<label for="patientId" class="col-sm-2 control-label">Patient ID</label>
 					<div class="col-sm-12">
-						<input type="text" th:field="*{note.patientId}" id="patientId" placeholder="Patient ID" class="col-4" readonly="true">
+						<input type="text" th:field="*{patientNote.patientId}" id="patientId" placeholder="Patient ID" class="col-4" readonly="true">
 						<p class="text-danger" th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}"></p>
 					</div>
 				</div>
@@ -60,11 +58,12 @@
 				<div class="form-group">
 					<div class="col-sm-12">
 						<input class="btn btn-success btn-sm" type="submit" value="Save">
-						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-success btn-sm">Cancel</a> 
+						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-success btn-sm">Cancel</a>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+
 </body>
 </html>

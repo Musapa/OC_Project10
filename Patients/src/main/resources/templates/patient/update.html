@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home</title>
+<title>Patient Update</title>
 
 <!-- Bootstrap -->
 <link rel="stylesheet"
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				th:src="@{/images/logo-01.png}" alt="" width="60" height="68"
@@ -30,16 +30,15 @@
 
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="/patient/list">Patients</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Notes</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/patient/list">Patients</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost:8082/patient/list">Notes</a></li>
 					<li class="nav-item"><a class="nav-link" href="http://localhost:8080/patient/list">Reports</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-
-	<div class="container col-md-12 mb-2">
+	
+	<div class="container col-md-12 mb-2">	
 		<div class="row">
 			<form action="#" th:action="@{/patient/update/{id}(id=${patient.id})}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
@@ -97,6 +96,7 @@
 			</form>
 		</div>
 	</div>
+	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>

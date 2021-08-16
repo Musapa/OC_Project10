@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home</title>
+<title>Report - Patient List</title>
 
 <!-- Bootstrap -->
 <link rel="stylesheet"
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				th:src="@{/images/logo-01.png}" alt="" width="60" height="68"
@@ -33,16 +33,15 @@
 
 			<div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link"
-						aria-current="page" href="http://localhost:8081/patient/list">Patients</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Notes</a></li>
-					<li class="nav-item"><a class="nav-link active" href="/patient/list">Reports</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost:8081/patient/list">Patients</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost:8082/patient/list">Notes</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/patient/list">Reports</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<div class="container col-md-6 mb-2">
+	<div class="container col-md-7 mb-2">
 		<div class="row">
 			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patients">List of patients</div>
 			<table class="table table-bordered">
@@ -63,7 +62,7 @@
 					<tr th:if="${patientList.empty}">
 						<td> No Patients on a list </td>
 					</tr>
-					<tr th:each="patient : ${patientList}">
+					<tr class="text-center" th:each="patient : ${patientList}">
 						<td style="width: 10%" th:text="${patient.id}"></td>
 						<td th:text="${patient.givenName}"></td>
 						<td th:text="${patient.familyName}"></td>
@@ -71,15 +70,14 @@
 						<td th:text="${patient.sex}"></td>
 						<td th:text="${patient.address}"></td>
 						<td th:text="${patient.phone}"></td>
-						<td style="width: 12%" class="text-center">
-							<a th:href="@{/patient/update/{id}(id=${patient.id})}"></i>Edit</a>&nbsp;|&nbsp;
-							<a th:href="@{/patient/delete/{id}(id=${patient.id})}">Delete</a>
+						<td style="width: 28%">
+							<!-- Umjesto Edit i Delete napraviti za patient report -->
+							<a class="btn btn-outline-info btn-sm" th:href="@{http://localhost:8081/patient/update/{id}(id=${patient.id})}"></i>Edit</a>&nbsp;|&nbsp;
+							<a class="btn btn-outline-info btn-sm" th:href="@{http://localhost:8081/patient/delete/{id}(id=${patient.id})}">Delete</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			
-			<a href="/patient/add" class="col-12 d-flex justify-content-center btn btn-lg btn-info mb-5 mt-3">Add new patient</a>
 		</div>
 	</div>
 

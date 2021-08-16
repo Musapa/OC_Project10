@@ -11,4 +11,12 @@
 	<packaging>jar</packaging>
 	<name>Notes</name>
 	<description>Notes maven module project</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.openclassrooms</groupId>
+			<artifactId>Domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>
