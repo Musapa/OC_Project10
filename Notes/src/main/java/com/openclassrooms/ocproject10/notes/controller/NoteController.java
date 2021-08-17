@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.openclassrooms.ocproject10.domain.Patient;
+import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 import com.openclassrooms.ocproject10.notes.service.NoteService;
 
@@ -30,6 +31,7 @@ public class NoteController {
 
 	private static final Logger log = LoggerFactory.getLogger(NoteController.class);
 
+	/* GET patient list view */
 	@GetMapping(value = "/patient/list")
 	public ModelAndView getAllPatients(Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -39,11 +41,13 @@ public class NoteController {
 		return mav;
 	}
 
+	/* GET api patient list */
 	@RequestMapping("api/patient/list")
 	public List<Patient> getAllPatientsApi() {
 		return noteService.getAllPatients();
 	}
 
+	/* GET note list view */
 	@GetMapping("/note/list/{patientId}")
 	public ModelAndView getAllNotesByPatientId(@PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -63,35 +67,38 @@ public class NoteController {
 	 * 4. save patientNote
 	 */
 	
+	/* GET add note view */
 	@GetMapping("/note/add/{patientId}")
 	public ModelAndView addNote(@PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
-		if (patientId != null) {
-			PatientNote note = new PatientNote();
-			note.setPatientId(patientId);
+		Patient patient = patientService.findPatientById(id);
+		if (patient != null) {
+			Note note = new Note();
 			model.addAttribute("note", note);
-			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/add");
+			log.info("LOG: Show addNote form");
+			return mav;
 		}
-		log.info("GET request received for addNote()");
 		return mav;
 	}
-
-	@PostMapping(value = "/note/save/{patientId}") 
-	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid PatientNote note, BindingResult result, Model model) {
-		ModelAndView mav = new ModelAndView();
-		if (patientId != null) {
-			if (!result.hasErrors()) {
-				noteService.createNote(note);
-				model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientId));
-				mav.addObject("patientId", patientId);
-				mav.setViewName("redirect:/note/list/{patientId}");
-				log.info("Add Note " + note.toString());
-				return mav;
-			}
-		}
-		mav.setViewName("note/add");
-		return mav;
-	}
+	
+	/* POST save add note */
+    @PostMapping(value = "/note/save/{patientId}")
+    public ModelAndView validate(@PathVariable("patientId") String patientId, @Valid PatientNote notes, BindingResult result, Model model) {
+        ModelAndView mav = new ModelAndView();
+        Patient patient = patientService.findPatientById(id);
+        if (patient != null) {
+            if (!result.hasErrors()) {
+                noteService.createNote(notes);
+                model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientId));
+                mav.addObject("patientId", patientId);
+                mav.setViewName("redirect:/note/list/{patientId}");
+                log.info("Add Note " + notes.toString());
+                return mav;
+            }
+        }
+        mav.setViewName("note/add");
+        return mav;
+    }
 
 }

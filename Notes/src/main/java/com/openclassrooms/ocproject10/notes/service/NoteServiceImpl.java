@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.notes.controller.NoteController;
-import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
