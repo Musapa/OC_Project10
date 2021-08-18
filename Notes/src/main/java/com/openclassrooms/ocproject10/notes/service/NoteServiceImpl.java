@@ -66,11 +66,6 @@ public class NoteServiceImpl implements NoteService{
 	
 	/*
 	@Override
-	public PatientNote createNote(PatientNote note) {
-		return noteRepository.save(note);
-	}
-
-	@Override
 	public void updateNote(PatientNote note) {
 		Optional<PatientNote> noteOptional = noteRepository.findById(note.getId());
 		if (noteOptional.isPresent()) {

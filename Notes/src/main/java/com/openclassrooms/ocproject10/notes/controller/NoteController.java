@@ -61,44 +61,44 @@ public class NoteController {
 	}
 
 	/*
-	 * 1. find patient with ID 
-	 * 2. if there no patient than create a new patient 
-	 * 3. add note to patientNotes 
-	 * 4. save patientNote
+	 * 1. find patient with ID 2. if there no patient than create a new patient 3.
+	 * add note to patientNotes 4. save patientNote
 	 */
-	
+
 	/* GET add note view */
 	@GetMapping("/note/add/{patientId}")
 	public ModelAndView addNote(@PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
-		Patient patient = patientService.findPatientById(id);
-		if (patient != null) {
-			Note note = new Note();
+		Note note = new Note();
+		model.addAttribute("note", note);
+		model.addAttribute("patientId", patientId);
+		mav.setViewName("note/add");
+		log.info("LOG: Show addNote form");
+		return mav;
+
+	}
+
+	/* POST save add note */
+	@PostMapping(value = "/note/save/{patientId}")
+	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid Note note, BindingResult result, Model model) {
+		ModelAndView mav = new ModelAndView();
+		if (!result.hasErrors()) {
 			model.addAttribute("note", note);
+			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/add");
-			log.info("LOG: Show addNote form");
 			return mav;
 		}
+		PatientNote patientNote = noteService.findNoteById(patientId);
+		if (patientNote != null) {
+			patientNote = new PatientNote(patientId);
+		}
+		patientNote.getNotes().add(note);
+		noteService.createNote(patientNote);
+		model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientId));
+		mav.addObject("patientId", patientId);
+		mav.setViewName("redirect:/note/list/{patientId}");
+		log.info("Add Note " + note.toString());
 		return mav;
 	}
-	
-	/* POST save add note */
-    @PostMapping(value = "/note/save/{patientId}")
-    public ModelAndView validate(@PathVariable("patientId") String patientId, @Valid PatientNote notes, BindingResult result, Model model) {
-        ModelAndView mav = new ModelAndView();
-        Patient patient = patientService.findPatientById(id);
-        if (patient != null) {
-            if (!result.hasErrors()) {
-                noteService.createNote(notes);
-                model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientId));
-                mav.addObject("patientId", patientId);
-                mav.setViewName("redirect:/note/list/{patientId}");
-                log.info("Add Note " + notes.toString());
-                return mav;
-            }
-        }
-        mav.setViewName("note/add");
-        return mav;
-    }
 
 }

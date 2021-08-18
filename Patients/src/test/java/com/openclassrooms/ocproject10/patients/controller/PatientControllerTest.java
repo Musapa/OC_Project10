@@ -94,15 +94,13 @@ public class PatientControllerTest {
 
 		String content = result.getResponse().getContentAsString();
 		System.out.println("Content" + content);
+		//check that patinet 1 is presented in HTML
 	}
 
 	@Test
 	public void addPatientForm() throws Exception {
-		MvcResult result = mockMvc.perform(get("/patient/add")).andExpect(view().name("patient/add"))
+		mockMvc.perform(get("/patient/add")).andExpect(view().name("patient/add"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
-
-		String content = result.getResponse().getContentAsString();
-		System.out.println("Content" + content);
 	}
 
 	@Test
@@ -127,11 +125,8 @@ public class PatientControllerTest {
 
 	@Test
 	public void updatePatientForm() throws Exception {
-		MvcResult result = mockMvc.perform(get("/patient/update/2")).andExpect(view().name("patient/update"))
+		mockMvc.perform(get("/patient/update/2")).andExpect(view().name("patient/update"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
-
-		String content = result.getResponse().getContentAsString();
-		System.out.println("Content" + content);
 	}
 
 	@Test

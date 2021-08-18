@@ -20,6 +20,7 @@ public class PatientNote {
 	}
 
 	public PatientNote(String patientId) {
+		super();
 		this.patientId = patientId;
 	}
 
