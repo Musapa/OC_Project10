@@ -1,6 +1,8 @@
 package com.openclassrooms.ocproject10.patients.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -27,8 +29,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassrooms.ocproject10.patients.PatientsApplication;
 import com.openclassrooms.ocproject10.domain.Patient;
+import com.openclassrooms.ocproject10.patients.PatientsApplication;
 import com.openclassrooms.ocproject10.patients.repository.PatientRepository;
 
 @RunWith(SpringRunner.class)
@@ -94,7 +96,9 @@ public class PatientControllerTest {
 
 		String content = result.getResponse().getContentAsString();
 		System.out.println("Content" + content);
-		//check that patinet 1 is presented in HTML
+		
+		int foundPatient2 = content.indexOf("Test_2");
+		assertNotEquals("Cannot find user", foundPatient2, -1);
 	}
 
 	@Test
