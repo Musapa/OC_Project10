@@ -14,7 +14,7 @@ public class PatientNote {
 
 	@Field("notes")
 	private List<Note> notes;
-	
+
 	public PatientNote() {
 		this.notes = new ArrayList<>();
 	}

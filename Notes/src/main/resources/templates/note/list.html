@@ -11,10 +11,8 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
 </head>
+
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 		<div class="container-fluid">
@@ -65,7 +63,9 @@
 				</tbody>
 			</table>
 
-			<a th:href="@{'/note/add/' + ${patientId}}" class="col-12 d-flex justify-content-center btn btn-lg btn-success mb-5 mt-3">Add New Note</a>
+			<a th:href="@{'/note/add/' + ${patientId}}" class="col-12 d-flex justify-content-center btn btn-lg btn-success mt-3">Add New Note</a>
+			<a href="/patient/list" class="col-12 d-flex justify-content-center btn btn-lg btn-outline-success mb-5 mt-3">Cancel</a>
+
 		</div>
 	</div>
 

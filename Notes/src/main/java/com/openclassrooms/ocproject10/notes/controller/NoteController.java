@@ -61,24 +61,30 @@ public class NoteController {
 	}
 
 	/*
-	 * 1. find patient with ID 2. if there no patient than create a new patient 3.
-	 * add note to patientNotes 4. save patientNote
+	 * 1. find patient with ID 
+	 * 2. if there no patient than create a new patient 
+	 * 3. add note to patientNotes 
+	 * 4. save patientNote
 	 */
 
-	/* GET add note view */
+	/* GET addNote view */
 	@GetMapping("/note/add/{patientId}")
 	public ModelAndView addNote(@PathVariable("patientId") String patientId, Model model) {
-		ModelAndView mav = new ModelAndView();
-		Note note = new Note();
-		model.addAttribute("note", note);
-		model.addAttribute("patientId", patientId);
-		mav.setViewName("note/add");
-		log.info("LOG: Show addNote form");
-		return mav;
+	    ModelAndView mav = new ModelAndView();
+	    Note note = new Note();
+	    PatientNote patientNote = new PatientNote();
+	    
+	    model.addAttribute("note", note);
+	    model.addAttribute("patientId", patientId);
+	    model.addAttribute("patientNote", patientNote);
+	    
+	    mav.setViewName("note/add");
+	    log.info("LOG: Show addNote form");
+	    return mav;
 
 	}
 
-	/* POST save add note */
+	/* POST save addNote */
 	@PostMapping(value = "/note/save/{patientId}")
 	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid Note note, BindingResult result, Model model) {
 		ModelAndView mav = new ModelAndView();
