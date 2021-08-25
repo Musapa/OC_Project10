@@ -40,7 +40,7 @@
 	
 	<div class="container col-md-12 mb-2 mt-4">
 		<div class="row">			
-			<form action="#" th:action="@{/note/save/{patientId}(patientId=${patientNote.patientId})}" th:object="${patientNote}" method="post" class="form-horizontal" style="width: 100%">
+			<form action="#" th:action="@{/note/save/{patientId}(patientId=${patientId})}" th:object="${note}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
 					<div class="col-sm-12">
 						<p class="pstyle_account"> PatientId: <span th:utext="${patientId}" style="font-weight: 700;"></span></p>
@@ -49,8 +49,8 @@
 				<div class="form-group">
 					<label for="note" class="col-sm-2 control-label">Note</label>
 					<div class="col-sm-12">
-						<textarea input type="text" th:field="*{notes}" id="notes" placeholder="Add note for patient." class="col-4" rows="6"></textarea>
-						<p class="text-danger" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></p>
+						<textarea input type="text" th:field="*{text}" placeholder="Add note for patient." class="col-4" rows="6"></textarea>
+						<p class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
 					</div>
 				</div>
 				

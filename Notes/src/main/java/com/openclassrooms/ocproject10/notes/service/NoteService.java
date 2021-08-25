@@ -14,4 +14,6 @@ public interface NoteService {
 	PatientNote findNoteById(String patientId);
 	
 	PatientNote createNote(PatientNote note);
+
+	
 }

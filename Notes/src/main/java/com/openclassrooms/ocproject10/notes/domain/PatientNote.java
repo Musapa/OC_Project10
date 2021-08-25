@@ -3,12 +3,14 @@ package com.openclassrooms.ocproject10.notes.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "PatientNote")
 public class PatientNote {
 	
+	@Id
 	@Field("patientId")
 	private String patientId;
 
@@ -20,7 +22,7 @@ public class PatientNote {
 	}
 
 	public PatientNote(String patientId) {
-		super();
+		this();
 		this.patientId = patientId;
 	}
 

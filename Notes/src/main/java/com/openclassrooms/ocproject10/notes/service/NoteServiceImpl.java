@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.notes.controller.NoteController;
+import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
@@ -64,21 +65,5 @@ public class NoteServiceImpl implements NoteService{
 		return noteRepository.save(note);
 	}
 	
-	/*
-	@Override
-	public void updateNote(PatientNote note) {
-		Optional<PatientNote> noteOptional = noteRepository.findById(note.getId());
-		if (noteOptional.isPresent()) {
-			noteRepository.save(note);
-		}
-	}
-
-	@Override
-	public void deleteNote(Integer id) {
-		Optional<PatientNote> noteOptional = noteRepository.findById(id);
-		if (noteOptional.isPresent()) {
-			noteRepository.delete(noteOptional.get());
-		}
-	}*/
 	
 }

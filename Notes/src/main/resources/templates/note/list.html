@@ -53,12 +53,12 @@
 					<tr th:if="${noteList.empty}">
 						<td>No Notes on a list for patient <span th:utext="${patientId}" style="font-weight: 700;"></span></td>
 					</tr>
-					<tr th:each="note : ${noteList}">
-						<td style="width: 10%" th:text="${patientNote.patientId}"></td>
-						<td th:text="${note.note}"></td>
-						<td style="width: 12%" class="text-center"><a
-							th:href="@{/note/update/{id}(id=${patientNote.patientId})}"></i>Edit</a>&nbsp;|&nbsp;
-							<a th:href="@{/note/delete/{id}(id=${note.id})}">Delete</a></td>
+					<tr class="text-center" th:each="note : ${noteList}">
+						<td style="width: 12%" th:text="${patientId}"></td>
+						<td th:text="${note.text}"></td>
+						<td style="width: 28%" class="text-center"><a
+							th:href="@{/note/update/{id}(id=${patientId})}" class="btn btn-outline-success btn-sm">Edit Note</a>&nbsp;|&nbsp;
+							<a th:href="@{/note/delete/{id}(id=${note.id})}" class="btn btn-outline-danger btn-sm">Delete Note</a></td>
 					</tr>
 				</tbody>
 			</table>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
+	
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,32 +38,32 @@
 		</div>
 	</nav>
 
-	<div class="container col-md-12 mb-2">
-		<div class="row">
-			<form action="#" th:action="@{/note/update/{id}(id=${note.id})}" method="post" class="form-horizontal" style="width: 100%">
+	<div class="container col-md-12 mb-2 mt-4">
+		<div class="row">			
+			<form action="#" th:action="@{/note/update/{patientId}(patientId=${patientId})}" th:object="${note}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
-					<label for="patientId" class="col-sm-2 control-label">Patient ID</label>
 					<div class="col-sm-12">
-						<input type="text" th:field="*{note.patientId}" id="patientId" placeholder="Patient ID" class="col-4" readonly="true">
-						<p class="text-danger" th:if="${#fields.hasErrors('note.patientId')}" th:errors="*{note.patientId}"></p>
+						<p class="pstyle_account"> PatientId: <span th:utext="${patientId}" style="font-weight: 700;"></span></p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="note" class="col-sm-2 control-label">Note</label>
 					<div class="col-sm-12">
-						<input type="text" th:field="*{note.note}" id="note" placeholder="Note" class="col-4">
-						<p class="text-danger" th:if="${#fields.hasErrors('note.note')}" th:errors="*{note.note}"></p>
+						<textarea input type="text" th:field="*{text}" placeholder="Update note for patient." class="col-4" rows="6"></textarea>
+						<p class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input class="btn btn-success btn-sm" type="submit" value="Update">
-						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-success btn-sm">Cancel</a> 
+						<input class="btn btn-success btn-sm" type="submit" value="Save">
+						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-success btn-sm">Cancel</a>
+						<a href="/patient/list" class="btn btn-outline-info btn-sm">Note Patient List</a>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+	
 </body>
 </html>

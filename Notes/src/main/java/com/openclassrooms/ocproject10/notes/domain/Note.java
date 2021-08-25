@@ -1,29 +1,32 @@
 package com.openclassrooms.ocproject10.notes.domain;
 
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.data.mongodb.core.mapping.Field;
+import java.util.UUID;
 
 public class Note {
 	
-	@Field("note")
-	@NotBlank(message = "Note field is mandatory.")
-	private String note;
+	private String id;
+	
+	private String text;
 	
 	public Note() {
-
+		this.id = UUID.randomUUID().toString();
 	}
 
-	public Note(String note) {
-		this.note = note;
+	public String getId() {
+		return id;
 	}
 
-	public String getNote() {
-		return note;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public String getText() {
+		return text;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
 
 }

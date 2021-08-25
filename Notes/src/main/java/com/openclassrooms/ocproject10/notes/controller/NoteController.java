@@ -1,5 +1,6 @@
 package com.openclassrooms.ocproject10.notes.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -52,7 +53,10 @@ public class NoteController {
 	public ModelAndView getAllNotesByPatientId(@PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
 		if (patientId != null) {
-			model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientId));
+			PatientNote patientNote = noteService.findNoteById(patientId);
+			List<Note> notes = (patientNote != null) ? patientNote.getNotes() : new ArrayList<>();
+			
+			model.addAttribute("noteList", notes);
 			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/list");
 		}
@@ -60,23 +64,14 @@ public class NoteController {
 		return mav;
 	}
 
-	/*
-	 * 1. find patient with ID 
-	 * 2. if there no patient than create a new patient 
-	 * 3. add note to patientNotes 
-	 * 4. save patientNote
-	 */
-
 	/* GET addNote view */
 	@GetMapping("/note/add/{patientId}")
 	public ModelAndView addNote(@PathVariable("patientId") String patientId, Model model) {
 	    ModelAndView mav = new ModelAndView();
 	    Note note = new Note();
-	    PatientNote patientNote = new PatientNote();
 	    
 	    model.addAttribute("note", note);
 	    model.addAttribute("patientId", patientId);
-	    model.addAttribute("patientNote", patientNote);
 	    
 	    mav.setViewName("note/add");
 	    log.info("LOG: Show addNote form");
@@ -88,14 +83,14 @@ public class NoteController {
 	@PostMapping(value = "/note/save/{patientId}")
 	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid Note note, BindingResult result, Model model) {
 		ModelAndView mav = new ModelAndView();
-		if (!result.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("note", note);
 			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/add");
 			return mav;
 		}
 		PatientNote patientNote = noteService.findNoteById(patientId);
-		if (patientNote != null) {
+		if (patientNote == null) {
 			patientNote = new PatientNote(patientId);
 		}
 		patientNote.getNotes().add(note);
@@ -106,5 +101,37 @@ public class NoteController {
 		log.info("Add Note " + note.toString());
 		return mav;
 	}
+	
+	@GetMapping("/note/update/{patientId}")
+	public ModelAndView showNoteUpdateForm(@PathVariable("patientId") String patientId, Model model) {
+		ModelAndView mav = new ModelAndView();
+		PatientNote patientNote = noteService.findNoteById(patientId);
+		if (patientNote != null) {
+		    Note note = new Note();
+		    model.addAttribute("note", note);
+			model.addAttribute("patient", patientNote);
+			mav.setViewName("note/update");
+			log.info("LOG: Show update form");
+			return mav;
+		}
+		return mav;
+	}
+	
+	/*@GetMapping("/note/delete/{patientId}")
+	public ModelAndView deleteNote(@PathVariable("patientId") String patientId, Model model) {
+	    ModelAndView mav = new ModelAndView();
+	    
+	    PatientNote note = noteService.findNoteById(patientId);
+	    
+	    model.addAttribute("note", note);
+	    model.addAttribute("patientId", patientId);
+	    
+	    noteService.deleteNote(note);
+	    mav.setViewName("redirect:/note/list/{patientId}");
+	    log.info("LOG: Show addNote form");
+	    return mav;
+
+	}*/
+	
 
 }
