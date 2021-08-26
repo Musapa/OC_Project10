@@ -53,7 +53,7 @@ public class NoteController {
 	public ModelAndView getAllNotesByPatientId(@PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
 		if (patientId != null) {
-			PatientNote patientNote = noteService.findNoteById(patientId);
+			PatientNote patientNote = noteService.findNoteByPatientId(patientId);
 			List<Note> notes = (patientNote != null) ? patientNote.getNotes() : new ArrayList<>();
 			
 			model.addAttribute("noteList", notes);
@@ -89,7 +89,7 @@ public class NoteController {
 			mav.setViewName("note/add");
 			return mav;
 		}
-		PatientNote patientNote = noteService.findNoteById(patientId);
+		PatientNote patientNote = noteService.findNoteByPatientId(patientId);
 		if (patientNote == null) {
 			patientNote = new PatientNote(patientId);
 		}
@@ -105,9 +105,9 @@ public class NoteController {
 	@GetMapping("/note/update/{patientId}")
 	public ModelAndView showNoteUpdateForm(@PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
-		PatientNote patientNote = noteService.findNoteById(patientId);
+		PatientNote patientNote = noteService.findNoteByPatientId(patientId);
 		if (patientNote != null) {
-		    Note note = new Note();
+		    Note note = patientNote.getNotes();
 		    model.addAttribute("note", note);
 			model.addAttribute("patient", patientNote);
 			mav.setViewName("note/update");
@@ -117,21 +117,6 @@ public class NoteController {
 		return mav;
 	}
 	
-	/*@GetMapping("/note/delete/{patientId}")
-	public ModelAndView deleteNote(@PathVariable("patientId") String patientId, Model model) {
-	    ModelAndView mav = new ModelAndView();
-	    
-	    PatientNote note = noteService.findNoteById(patientId);
-	    
-	    model.addAttribute("note", note);
-	    model.addAttribute("patientId", patientId);
-	    
-	    noteService.deleteNote(note);
-	    mav.setViewName("redirect:/note/list/{patientId}");
-	    log.info("LOG: Show addNote form");
-	    return mav;
-
-	}*/
 	
 
 }

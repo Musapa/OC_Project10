@@ -47,17 +47,17 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="note" class="col-sm-2 control-label">Note</label>
+					<label for="noteText" class="col-sm-2 control-label">Note</label>
 					<div class="col-sm-12">
-						<textarea input type="text" th:field="*{text}" placeholder="Add note for patient." class="col-4" rows="6"></textarea>
-						<p class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+						<textarea input type="text" th:field="*{noteText}" placeholder="Add note for patient." class="col-4" rows="6"></textarea>
+						<p class="text-danger" th:if="${#fields.hasErrors('noteText')}" th:errors="*{noteText}"></p>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<div class="col-sm-12">
 						<input class="btn btn-success btn-sm" type="submit" value="Save">
-						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-success btn-sm">Cancel</a>
+						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-danger btn-sm">Cancel</a>
 						<a href="/patient/list" class="btn btn-outline-info btn-sm">Note Patient List</a>
 					</div>
 				</div>

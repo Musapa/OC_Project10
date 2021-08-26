@@ -6,7 +6,7 @@ public class Note {
 	
 	private String id;
 	
-	private String text;
+	private String noteText;
 	
 	public Note() {
 		this.id = UUID.randomUUID().toString();
@@ -20,12 +20,12 @@ public class Note {
 		this.id = id;
 	}
 
-	public String getText() {
-		return text;
+	public String getNoteText() {
+		return noteText;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setNoteText(String noteText) {
+		this.noteText = noteText;
 	}
 
 
