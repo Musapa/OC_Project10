@@ -57,9 +57,9 @@
 						<td style="width: 12%" th:text="${patientId}"></td>
 						<td th:text="${note.noteText}"></td>
 						<td style="width: 28%" class="text-center"><a
-							th:href="@{/note/update/{id}(id=${patientId})}" class="btn btn-outline-success btn-sm">Edit Note</a>&nbsp;|&nbsp;
-							<a th:href="@{/note/delete/{id}(id=${note.id})}" class="btn btn-outline-danger btn-sm">Delete Note</a></td>
-					</tr>
+							th:href="@{/note/update/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-success btn-sm">Edit Note</a>&nbsp;|&nbsp;
+							<a th:href="@{/note/delete/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-danger btn-sm">Delete Note</a></td>
+					</tr>               
 				</tbody>
 			</table>
 

@@ -3,7 +3,6 @@ package com.openclassrooms.ocproject10.notes.service;
 import java.util.List;
 
 import com.openclassrooms.ocproject10.domain.Patient;
-import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 
 public interface NoteService {
@@ -15,6 +14,8 @@ public interface NoteService {
 	PatientNote findNoteByPatientId(String patientId);
 	
 	PatientNote createNote(PatientNote note);
+
+	void deleteNote(String noteId);
 
 	
 }

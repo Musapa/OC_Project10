@@ -55,7 +55,7 @@ public class NoteController {
 		if (patientId != null) {
 			PatientNote patientNote = noteService.findNoteByPatientId(patientId);
 			List<Note> notes = (patientNote != null) ? patientNote.getNotes() : new ArrayList<>();
-			
+
 			model.addAttribute("noteList", notes);
 			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/list");
@@ -67,21 +67,22 @@ public class NoteController {
 	/* GET addNote view */
 	@GetMapping("/note/add/{patientId}")
 	public ModelAndView addNote(@PathVariable("patientId") String patientId, Model model) {
-	    ModelAndView mav = new ModelAndView();
-	    Note note = new Note();
-	    
-	    model.addAttribute("note", note);
-	    model.addAttribute("patientId", patientId);
-	    
-	    mav.setViewName("note/add");
-	    log.info("LOG: Show addNote form");
-	    return mav;
+		ModelAndView mav = new ModelAndView();
+		Note note = new Note();
+
+		model.addAttribute("note", note);
+		model.addAttribute("patientId", patientId);
+
+		mav.setViewName("note/add");
+		log.info("LOG: Show addNote form");
+		return mav;
 
 	}
 
 	/* POST save addNote */
 	@PostMapping(value = "/note/save/{patientId}")
-	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid Note note, BindingResult result, Model model) {
+	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid Note note, BindingResult result,
+			Model model) {
 		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
 			model.addAttribute("note", note);
@@ -101,22 +102,44 @@ public class NoteController {
 		log.info("Add Note " + note.toString());
 		return mav;
 	}
-	
-	@GetMapping("/note/update/{patientId}")
-	public ModelAndView showNoteUpdateForm(@PathVariable("patientId") String patientId, Model model) {
+
+	/* GET update note view */
+	/*
+	 * @GetMapping("/patient/update/{patientId}/{id}") public ModelAndView
+	 * showNoteUpdateForm(@PathVariable("patientId") String patientId, Model model)
+	 * { ModelAndView mav = new ModelAndView(); PatientNote patientNote =
+	 * noteService.findNoteByPatientId(patientId); List<Note> notes =
+	 * patientNote.getNotes(); if (patientNote != null) { for (Note note : notes) {
+	 * mav.addObject("id", note.getId()); mav.addObject("patientId",
+	 * patientNote.getPatientId()); model.addAttribute("noteList",
+	 * noteService.findAllNotesByPatientId(patientNote.getPatientId()));
+	 * mav.setViewName("redirect:/note/list/{patientId}"); log.info("Update Note " +
+	 * note.getId().toString()); return mav; } } return mav; }
+	 */
+
+	// Need to find the PatientNote and then iterate through the notes until you
+	// find the note.
+	// In the url's for edit and delete note need to pass both patientId and noteId.
+
+	/* GET delete patient */
+	@GetMapping("/note/delete/{patientId}/{id}")
+	public ModelAndView deleteNote(@PathVariable("id") String id, @PathVariable("patientId") String patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
 		PatientNote patientNote = noteService.findNoteByPatientId(patientId);
 		if (patientNote != null) {
-		    Note note = patientNote.getNotes();
-		    model.addAttribute("note", note);
-			model.addAttribute("patient", patientNote);
-			mav.setViewName("note/update");
-			log.info("LOG: Show update form");
+			List<Note> notes = patientNote.getNotes();
+			for (Note note : notes) {
+				if (id.equals(note.getId())) {
+					noteService.deleteNote(id);
+					log.info("Delete Note " + note.getId().toString());
+				}
+			}
+			mav.addObject("id", id);
+			mav.addObject("patientId", patientId);
+			model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientNote.getPatientId()));
+			mav.setViewName("redirect:/note/list/{patientId}");
 			return mav;
 		}
 		return mav;
 	}
-	
-	
-
 }

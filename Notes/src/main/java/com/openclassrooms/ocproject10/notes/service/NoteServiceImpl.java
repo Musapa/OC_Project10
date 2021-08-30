@@ -1,6 +1,7 @@
 package com.openclassrooms.ocproject10.notes.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.notes.controller.NoteController;
+import com.openclassrooms.ocproject10.notes.domain.Note;
 import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
@@ -64,5 +66,15 @@ public class NoteServiceImpl implements NoteService{
 		return noteRepository.save(note);
 	}
 	
+	@Override
+    public void deleteNote(String noteId) {
+        Optional<PatientNote> noteOptional = noteRepository.findById(noteId);
+        //noteOptional mi nije prezentiran i on je Empty. Mora imati vrijednost od Note id.
+        if (noteOptional.isPresent()) {
+            noteRepository.delete(noteOptional.get());
+        } else {
+            throw new NoSuchElementException("Something is wrong");        
+        }
+    }
 	
 }
