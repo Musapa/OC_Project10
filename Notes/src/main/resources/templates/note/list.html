@@ -43,7 +43,7 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr class="table-success">
-						<th class="text-center">Patient Id</th>
+						<th class="text-center">Note Id</th>
 						<th class="text-center">Note</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -54,10 +54,11 @@
 						<td>No Notes on a list for patient <span th:utext="${patientId}" style="font-weight: 700;"></span></td>
 					</tr>
 					<tr class="text-center" th:each="note : ${noteList}">
-						<td style="width: 12%" th:text="${patientId}"></td>
+						<td style="width: 12%" th:text="${note.id}"></td>
 						<td th:text="${note.noteText}"></td>
-						<td style="width: 28%" class="text-center"><a
-							th:href="@{/note/update/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-success btn-sm">Edit Note</a>&nbsp;|&nbsp;
+						<td style="width: 35%" class="text-center">
+						    <a th:href="@{/note/view/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-success btn-sm">View Note</a>&nbsp;|&nbsp;
+						    <a th:href="@{/note/update/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-success btn-sm">Edit Note</a>&nbsp;|&nbsp;
 							<a th:href="@{/note/delete/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-danger btn-sm">Delete Note</a></td>
 					</tr>               
 				</tbody>

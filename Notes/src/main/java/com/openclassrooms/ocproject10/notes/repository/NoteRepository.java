@@ -6,12 +6,12 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.openclassrooms.ocproject10.notes.domain.PatientNote;
+import com.openclassrooms.ocproject10.notes.domain.Note;
 
-public interface NoteRepository extends MongoRepository<PatientNote, String> {
+public interface NoteRepository extends MongoRepository<Note, String> {
 
-	List<PatientNote> findNotesByPatientId(String patientId);
+	List<Note> findNotesByPatientId(String patientId);
 
-	Optional<PatientNote> findById(String patientId);
+	Optional<Note> findById(String patientId);
 	
 }

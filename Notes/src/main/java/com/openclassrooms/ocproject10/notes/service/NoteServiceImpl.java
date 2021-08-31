@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.notes.controller.NoteController;
 import com.openclassrooms.ocproject10.notes.domain.Note;
-import com.openclassrooms.ocproject10.notes.domain.PatientNote;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
 @Service("noteService")
@@ -49,27 +48,34 @@ public class NoteServiceImpl implements NoteService{
 	
 	
 	@Override
-	public List<PatientNote> findAllNotesByPatientId(String patientId) {
+	public List<Note> findAllNotesByPatientId(String patientId) {
 		return noteRepository.findNotesByPatientId(patientId);
 	}
 	
 	@Override
-	public PatientNote findNoteByPatientId(String patientId) {
-		Optional<PatientNote> noteOptional = noteRepository.findById(patientId);
+	public Note findNoteByPatientId(String patientId) {
+		Optional<Note> noteOptional = noteRepository.findById(patientId);
 		if (noteOptional.isPresent()) {
 			return noteOptional.get();
 		}
 		return null;
 	}
 	
-	public PatientNote createNote(PatientNote note) {
+	public Note createNote(Note note) {
 		return noteRepository.save(note);
 	}
 	
+    @Override
+    public void updateNote(Note note) {
+        Optional<Note> noteOptional = noteRepository.findById(note.getId());
+        if (noteOptional.isPresent()) {
+            noteRepository.save(note);
+        }
+    }
+	
 	@Override
     public void deleteNote(String noteId) {
-        Optional<PatientNote> noteOptional = noteRepository.findById(noteId);
-        //noteOptional mi nije prezentiran i on je Empty. Mora imati vrijednost od Note id.
+        Optional<Note> noteOptional = noteRepository.findById(noteId);
         if (noteOptional.isPresent()) {
             noteRepository.delete(noteOptional.get());
         } else {

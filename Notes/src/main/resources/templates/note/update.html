@@ -43,11 +43,14 @@
 			<form action="#" th:action="@{/note/update/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" th:object="${note}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
 					<div class="col-sm-12">
-						<p class="pstyle_account">Id: <span th:utext="*{id}" style="font-weight: 700;"></span></p>
+						<p class="pstyle_account">Patient Id: <span th:utext="*{patientId}" style="font-weight: 700;"></span></p>
+					</div>
+					<div class="col-sm-12">
+						<p class="pstyle_account">Note Id: <span th:utext="*{id}" style="font-weight: 700;"></span></p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="noteText" class="col-sm-2 control-label">Note</label>
+					<label for="noteText" class="col-sm-2 control-label">Update a Note:</label>
 					<div class="col-sm-12">
 						<textarea input type="text" th:field="*{noteText}" placeholder="Update note for patient." class="col-4" rows="6"></textarea>
 						<p class="text-danger" th:if="${#fields.hasErrors('noteText')}" th:errors="*{noteText}"></p>
@@ -56,9 +59,9 @@
 				
 				<div class="form-group">
 					<div class="col-sm-12">
+						<a href="/patient/list" class="btn btn-outline-success btn-sm">Note Patient List</a>
 						<input class="btn btn-success btn-sm" type="submit" value="Save">
-						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-success btn-sm">Cancel</a>
-						<a href="/patient/list" class="btn btn-outline-info btn-sm">Note Patient List</a>
+						<a th:href="@{'/note/list/' + ${patientId}}" class="btn btn-danger btn-sm">Cancel</a>
 					</div>
 				</div>
 			</form>

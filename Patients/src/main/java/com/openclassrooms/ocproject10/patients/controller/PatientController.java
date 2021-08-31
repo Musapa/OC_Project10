@@ -44,11 +44,11 @@ public class PatientController {
 		ModelAndView mav = new ModelAndView();
 		model.addAttribute("patient", new Patient());
 		mav.setViewName("patient/add");
-		log.info("LOG: Add patient view");
+		log.info("LOG: Show addPatient view");
 		return mav;
 	}
 
-	/* POST save add patients */
+	/* POST save addPatients */
 	@PostMapping(value = "/patient/save")
 	public ModelAndView save(@Valid Patient patient, BindingResult result, Model model) {
 		ModelAndView mav = new ModelAndView();
