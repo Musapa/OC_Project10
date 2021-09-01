@@ -7,8 +7,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +53,6 @@ public class NoteController {
 		if (patientId != null) {
 			List<Note> notes = noteService.findAllNotesByPatientId(patientId);
 			model.addAttribute("noteList", notes);
-			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/list");
 		}
 		log.info("LOG: Number of notes on list (by patient id): " + noteService.findAllNotesByPatientId(patientId).size());
@@ -68,7 +65,7 @@ public class NoteController {
 		ModelAndView mav = new ModelAndView();
 		if (patientId != null) {
 			Note note = new Note();
-			note.setPatientId(patientId);
+            note.setPatientId(patientId);
 			model.addAttribute("note", note);
 			mav.setViewName("note/add");
 			log.info("LOG: Show addNote view");
@@ -78,22 +75,14 @@ public class NoteController {
 
 	/* POST save addNote */
 	@PostMapping(value = "/note/save/{patientId}")
-	public ModelAndView save(@PathVariable("patientId") String patientId, @Valid Note note, BindingResult result,
-			Model model) {
+	public ModelAndView save(@Valid Note note, BindingResult result, Model model) {
 		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
 			model.addAttribute("note", note);
-			model.addAttribute("patientId", patientId);
 			mav.setViewName("note/add");
 			return mav;
 		}
-		Note patientNote = noteService.findNoteByPatientId(patientId);
-		if (patientNote == null) {
-			patientNote = new Note(patientId);
-		}
 		noteService.createNote(note);
-		model.addAttribute("noteList", noteService.findAllNotesByPatientId(patientId));
-		mav.addObject("patientId", patientId);
 		mav.setViewName("redirect:/note/list/{patientId}");
 		log.info("LOG: Note save: id:" + note.getId() + " noteText:" + note.getNoteText());
 		return mav;
@@ -106,7 +95,6 @@ public class NoteController {
 		Note note = noteService.findNoteByPatientId(id);
 		if (note != null) {
 			model.addAttribute("note", note);
-            mav.addObject("id", note.getId());
             mav.addObject("patientId", note.getPatientId());
 			mav.setViewName("note/update");
 			log.info("LOG: Show update note form");
@@ -117,16 +105,13 @@ public class NoteController {
 
 	/* POST save update patients */
 	@PostMapping("/note/update/{patientId}/{id}")
-	public ModelAndView updateNote(@PathVariable("id") String id, @PathVariable("patientId") String patientId, @Valid Note note, BindingResult result, Model model) {
+	public ModelAndView updateNote(@Valid Note note, BindingResult result, Model model) {
 		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
 			mav.setViewName("note/update");
 			return mav;
 		}
-		note.setId(note.getId());
 		noteService.updateNote(note);
-		model.addAttribute("noteList", noteService.findAllNotesByPatientId(note.getPatientId()));
-		mav.addObject("patientId", note.getPatientId());
 		mav.setViewName("redirect:/note/list/{patientId}");
 		log.info("LOG: Patient update: id:" + note.getId() + " noteText:" + note.getNoteText());
 		return mav;
@@ -139,8 +124,6 @@ public class NoteController {
 		Note note = noteService.findNoteByPatientId(id);
 		if (note != null) {
 			noteService.deleteNote(id);
-			mav.addObject("patientId", note.getPatientId());
-			model.addAttribute("noteList", noteService.findAllNotesByPatientId(note.getPatientId()));
 			mav.setViewName("redirect:/note/list/{patientId}");
 			log.info("LOG: Note delete: id:" + note.getId() + " noteText:" + note.getNoteText());
 			return mav;
@@ -154,7 +137,6 @@ public class NoteController {
 		Note note = noteService.findNoteByPatientId(id);
 		if (note != null) {
 			model.addAttribute("note", note);
-            mav.addObject("id", note.getId());
             mav.addObject("patientId", note.getPatientId());
 			mav.setViewName("note/view");
 			log.info("LOG: Show update note form");

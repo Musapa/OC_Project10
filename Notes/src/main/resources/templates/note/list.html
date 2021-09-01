@@ -54,9 +54,9 @@
 						<td>No Notes on a list for patient <span th:utext="${patientId}" style="font-weight: 700;"></span></td>
 					</tr>
 					<tr class="text-center" th:each="note : ${noteList}">
-						<td style="width: 12%" th:text="${note.id}"></td>
-						<td th:text="${note.noteText}"></td>
-						<td style="width: 35%" class="text-center">
+						<td style="width: 12%" th:text="${note.id}" class="align-middle"></td>
+						<td class="align-middle" th:text="${#strings.abbreviate(note.noteText, 40)}"></td>
+						<td style="width: 35%" class="align-middle">
 						    <a th:href="@{/note/view/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-success btn-sm">View Note</a>&nbsp;|&nbsp;
 						    <a th:href="@{/note/update/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-success btn-sm">Edit Note</a>&nbsp;|&nbsp;
 							<a th:href="@{/note/delete/{patientId}/{id} (patientId=${patientId}, id=${note.id})}" class="btn btn-outline-danger btn-sm">Delete Note</a></td>
