@@ -43,13 +43,13 @@
 
 	<div class="container col-md-7 mb-2">
 		<div class="row">
-			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patients">List of patients</div>
+			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patientsNotes">NOTES - list of patients</div>
 			<table class="table table-bordered">
 				<thead>
-					<tr class="table-info">
+					<tr class="table-success">
 						<th class="text-center">Id</th>
-						<th class="text-center">Given Name</th>
 						<th class="text-center">Family Name</th>
+						<th class="text-center">Given Name</th>
 						<th class="text-center">Date of Birth</th>
 						<th class="text-center">Gender</th>
 						<th class="text-center">Address</th>
@@ -64,14 +64,13 @@
 					</tr>
 					<tr class="text-center" th:each="patient : ${patientList}">
 						<td style="width: 10%" class="align-middle" th:text="${patient.id}"></td>
-						<td th:text="${patient.givenName}" class="align-middle"></td>
 						<td th:text="${patient.familyName}" class="align-middle"></td>
+						<td th:text="${patient.givenName}" class="align-middle"></td>
 						<td th:text="${patient.dob}" class="align-middle"></td>
 						<td th:text="${patient.sex}" class="align-middle"></td>
 						<td th:text="${patient.address}" class="align-middle"></td>
 						<td th:text="${patient.phone}" class="align-middle"></td>
-						<td style="width: 28%">
-							<a class="btn btn-outline-success btn-sm" th:href="@{/note/add/{patientId}(patientId=${patient.id})}">Add a Note</a>&nbsp;|&nbsp;
+						<td style="width: 20%">
                     		<a class="btn btn-outline-success btn-sm" th:href="@{/note/list/{patientId}(patientId=${patient.id})}">View Patient's Notes</a>							
 						</td>
 					</tr>
@@ -81,11 +80,10 @@
 	</div>
 
 	<style>
-		.list-patients {
-			font-family: "Lucida Console", "Courier New", monospace;
+		.list-patientsNotes {
+			font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 			font-size: 30px;
-			font-weight: bold;
-			color: #17a2b8;
+			color: #28a745;
 		}
 	</style>
 

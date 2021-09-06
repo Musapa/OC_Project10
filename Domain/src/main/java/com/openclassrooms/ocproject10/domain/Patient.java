@@ -23,15 +23,15 @@ public class Patient {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "givenName", nullable = false)
-	@Size(min = 1, max = 30, message = "Given name need to be between 1-30 characters.")
-	@NotBlank(message = "Given name is mandatory.")
-	private String givenName;
-
 	@Column(name = "familyName", nullable = false)
 	@Size(min = 1, max = 30, message = "Family name need to be between 1-30 characters.")
 	@NotBlank(message = "Family name is mandatory.")
 	private String familyName;
+	
+	@Column(name = "givenName", nullable = false)
+	@Size(min = 1, max = 30, message = "Given name need to be between 1-30 characters.")
+	@NotBlank(message = "Given name is mandatory.")
+	private String givenName;
 
 	@NotNull(message = "Date of birth is mandatory.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -51,11 +51,10 @@ public class Patient {
 
 	}
 
-	public Patient(Integer id, String givenName, String familyName, LocalDate dob, String sex, String address,
-			String phone) {
+	public Patient(Integer id, String familyName, String givenName, LocalDate dob, String sex, String address, String phone) {
 		this.id = id;
-		this.givenName = givenName;
 		this.familyName = familyName;
+		this.givenName = givenName;
 		this.dob = dob;
 		this.sex = sex;
 		this.address = address;
@@ -70,20 +69,20 @@ public class Patient {
 		this.id = id;
 	}
 
-	public String getGivenName() {
-		return givenName;
-	}
-
-	public void setGivenName(String givenName) {
-		this.givenName = givenName;
-	}
-
 	public String getFamilyName() {
 		return familyName;
 	}
 
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
+	}
+	
+	public String getGivenName() {
+		return givenName;
+	}
+
+	public void setGivenName(String givenName) {
+		this.givenName = givenName;
 	}
 
 	public LocalDate getDob() {

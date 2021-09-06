@@ -42,17 +42,17 @@
 		<div class="row">
 			<form action="#" th:action="@{/patient/save}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
-					<label for="givenName" class="col-sm-2 control-label">Given Name</label>
-					<div class="col-sm-12">
-						<input type="text" th:field="*{givenName}" id="givenName" placeholder="GivenName" class="col-4">
-						<p class="text-danger" th:if="${#fields.hasErrors('givenName')}" th:errors="*{givenName}"></p>
-					</div>
-				</div>
-				<div class="form-group">
 					<label for="familyName" class="col-sm-2 control-label">Family Name</label>
 					<div class="col-sm-12">
 						<input type="text" th:field="*{familyName}" id="familyName" placeholder="FamilyName" class="col-4">
 						<p class="text-danger" th:if="${#fields.hasErrors('familyName')}" th:errors="*{familyName}"></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="givenName" class="col-sm-2 control-label">Given Name</label>
+					<div class="col-sm-12">
+						<input type="text" th:field="*{givenName}" id="givenName" placeholder="GivenName" class="col-4">
+						<p class="text-danger" th:if="${#fields.hasErrors('givenName')}" th:errors="*{givenName}"></p>
 					</div>
 				</div>
 				<div class="form-group">

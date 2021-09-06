@@ -103,7 +103,7 @@ public class NoteController {
 		return mav;
 	}
 
-	/* POST save update patients */
+	/* POST save update note */
 	@PostMapping("/note/update/{patientId}/{id}")
 	public ModelAndView updateNote(@Valid Note note, BindingResult result, Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -117,7 +117,7 @@ public class NoteController {
 		return mav;
 	}
 
-	/* GET delete patient */
+	/* GET delete note */
 	@GetMapping("/note/delete/{patientId}/{id}")
 	public ModelAndView deleteNote(@PathVariable("id") String id, Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -131,6 +131,7 @@ public class NoteController {
 		return mav;
 	}
 	
+	/* GET view note */
 	@GetMapping("/note/view/{patientId}/{id}")
 	public ModelAndView showViewForm(@PathVariable("id") String id, Model model) {
 		ModelAndView mav = new ModelAndView();

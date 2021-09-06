@@ -43,13 +43,13 @@
 
 	<div class="container col-md-7 mb-2">
 		<div class="row">
-			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patients">List of patients</div>
+			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patientsReports">REPORTS - list of patients</div>
 			<table class="table table-bordered">
 				<thead>
-					<tr class="table-info">
+					<tr class="table-warning">
 						<th class="text-center">Id</th>
+						<th class="text-center">Family Name</th>						
 						<th class="text-center">Given Name</th>
-						<th class="text-center">Family Name</th>
 						<th class="text-center">Date of Birth</th>
 						<th class="text-center">Gender</th>
 						<th class="text-center">Address</th>
@@ -63,13 +63,13 @@
 						<td> No Patients on a list </td>
 					</tr>
 					<tr class="text-center" th:each="patient : ${patientList}">
-						<td style="width: 10%" th:text="${patient.id}"></td>
-						<td th:text="${patient.givenName}"></td>
-						<td th:text="${patient.familyName}"></td>
-						<td th:text="${patient.dob}"></td>
-						<td th:text="${patient.sex}"></td>
-						<td th:text="${patient.address}"></td>
-						<td th:text="${patient.phone}"></td>
+						<td style="width: 10%" th:text="${patient.id}" class="align-middle"></td>
+						<td th:text="${patient.familyName}" class="align-middle"></td>						
+						<td th:text="${patient.givenName}" class="align-middle"></td>
+						<td th:text="${patient.dob}" class="align-middle"></td>
+						<td th:text="${patient.sex}" class="align-middle"></td>
+						<td th:text="${patient.address}" class="align-middle"></td>
+						<td th:text="${patient.phone}" class="align-middle"></td>
 						<td style="width: 28%">
 							<!-- Umjesto Edit i Delete napraviti za patient report -->
 							<a class="btn btn-outline-info btn-sm" th:href="@{http://localhost:8081/patient/update/{id}(id=${patient.id})}"></i>Edit</a>&nbsp;|&nbsp;
@@ -80,13 +80,12 @@
 			</table>
 		</div>
 	</div>
-
+	
 	<style>
-		.list-patients {
-			font-family: "Lucida Console", "Courier New", monospace;
+		.list-patientsReports {
+			font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 			font-size: 30px;
-			font-weight: bold;
-			color: #17a2b8;
+			color: #ffc107;
 		}
 	</style>
 
