@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.openclassrooms.ocproject10.domain.Patient;
-import com.openclassrooms.ocproject10.notes.domain.Note;
+import com.openclassrooms.ocproject10.domain.Note;
 import com.openclassrooms.ocproject10.notes.service.NoteService;
 
 @RestController
@@ -144,6 +146,11 @@ public class NoteController {
 			return mav;
 		}
 		return mav;
+	}
+	
+	@GetMapping(value = "/api/note/list/{patientId}", produces = "application/json")
+	public ResponseEntity<List<Note>> getPatientList(@PathVariable("patientId") String patientId) {
+		return ResponseEntity.status(HttpStatus.OK).body(noteService.findAllNotesByPatientId(patientId));
 	}
 	
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.openclassrooms.ocproject10.notes.domain.Note;
+import com.openclassrooms.ocproject10.domain.Note;
 
 public interface NoteRepository extends MongoRepository<Note, String> {
 

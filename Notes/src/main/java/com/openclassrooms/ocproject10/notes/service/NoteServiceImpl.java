@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.notes.controller.NoteController;
-import com.openclassrooms.ocproject10.notes.domain.Note;
+import com.openclassrooms.ocproject10.domain.Note;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
 @Service("noteService")
@@ -32,6 +32,7 @@ public class NoteServiceImpl implements NoteService{
 	@Autowired
 	private NoteRepository noteRepository;
 
+	@Override
 	public List<Patient> getAllPatients() {
 		ResponseEntity<List<Patient>> response = restTemplateNotes()
 				.exchange(getPatientsUrl() + "api/patient/list", HttpMethod.GET, null,new ParameterizedTypeReference<List<Patient>>() {});

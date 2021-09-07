@@ -3,7 +3,7 @@ package com.openclassrooms.ocproject10.notes.service;
 import java.util.List;
 
 import com.openclassrooms.ocproject10.domain.Patient;
-import com.openclassrooms.ocproject10.notes.domain.Note;
+import com.openclassrooms.ocproject10.domain.Note;
 
 public interface NoteService {
 
@@ -19,6 +19,4 @@ public interface NoteService {
 	
 	void deleteNote(String noteId);
 
-
-	
 }

@@ -1,4 +1,4 @@
-package com.openclassrooms.ocproject10.notes.domain;
+package com.openclassrooms.ocproject10.domain;
 
 import java.util.Date;
 
