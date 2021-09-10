@@ -28,6 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -62,6 +63,8 @@ public class NoteControllerTest {
 
 	@Autowired
 	private NoteRepository noteRepository;
+	
+	private MockRestServiceServer mockServer;
 
 	static private final String PATIENTID = "1";
 	static private final String PATIENTID2 = "2";
@@ -69,6 +72,11 @@ public class NoteControllerTest {
 	@Before
 	public void setupMockmvc() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
+	}
+	
+	@Before
+	public void init() {
+		mockServer = MockRestServiceServer.createServer(restTemplate);
 	}
 
 	@Before
@@ -186,20 +194,27 @@ public class NoteControllerTest {
 
 	@Test
 	public void getAllPatients() throws Exception {
-		MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
-		server.expect(requestTo(new URI(NoteController.PATIENTSURL + "patient/list"))).andExpect(method(HttpMethod.GET))
-				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON));
+		Patient patient = new Patient();
+		String familyName = "Ferguson";
+		List<Patient> patients = new ArrayList<>();
+		
+		patient.setFamilyName(familyName);
+		patients.add(patient);
+		
+		String inputJson = objectMapper.writeValueAsString(patients);
+		
+		mockServer.expect(ExpectedCount.twice(),requestTo(new URI(NoteController.PATIENTSURL + "api/patient/list"))).andExpect(method(HttpMethod.GET))
+				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
 
 		MvcResult result = mockMvc.perform(get("/patient/list")).andExpect(view().name("patient/patientList"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
+		
+		mockServer.verify();
 
 		String content = result.getResponse().getContentAsString();
 		System.out.println("Content" + content);
 		
 		int foundPatient = content.indexOf("Ferguson");
 		assertNotEquals("Cannot find patient", foundPatient, -1);
-		
-
-		server.verify();
 	}
 }
