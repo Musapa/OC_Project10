@@ -14,11 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.openclassrooms.ocproject10.domain.Patient;
 import com.openclassrooms.ocproject10.domain.Note;
 import com.openclassrooms.ocproject10.notes.service.NoteService;
 
@@ -40,12 +38,6 @@ public class NoteController {
 		mav.setViewName("patient/patientList");
 		log.info("LOG: Number of patients on list: " + noteService.getAllPatients().size());
 		return mav;
-	}
-
-	/* GET api patient list */
-	@RequestMapping("api/patient/list")
-	public List<Patient> getAllPatientsApi() {
-		return noteService.getAllPatients();
 	}
 
 	/* GET note list view */

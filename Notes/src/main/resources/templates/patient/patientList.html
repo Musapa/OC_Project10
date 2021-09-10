@@ -63,14 +63,14 @@
 						<td> No Patients on a list </td>
 					</tr>
 					<tr class="text-center" th:each="patient : ${patientList}">
-						<td style="width: 10%" class="align-middle" th:text="${patient.id}"></td>
+						<td class="align-middle" th:text="${patient.id}"></td>
 						<td th:text="${patient.familyName}" class="align-middle"></td>
 						<td th:text="${patient.givenName}" class="align-middle"></td>
 						<td th:text="${patient.dob}" class="align-middle"></td>
 						<td th:text="${patient.sex}" class="align-middle"></td>
 						<td th:text="${patient.address}" class="align-middle"></td>
 						<td th:text="${patient.phone}" class="align-middle"></td>
-						<td style="width: 20%">
+						<td>
                     		<a class="btn btn-outline-success btn-sm" th:href="@{/note/list/{patientId}(patientId=${patient.id})}">View Patient's Notes</a>							
 						</td>
 					</tr>

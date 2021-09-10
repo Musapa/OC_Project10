@@ -97,7 +97,7 @@ public class PatientControllerTest {
 		System.out.println("Content" + content);
 		
 		int foundPatient2 = content.indexOf("Test_2");
-		assertNotEquals("Cannot find user", foundPatient2, -1);
+		assertNotEquals("Cannot find patient", foundPatient2, -1);
 	}
 
 	@Test

@@ -2,6 +2,13 @@ package com.openclassrooms.ocproject10.domain;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -10,16 +17,20 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Note {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 
 	@Field("patientId")
+	@NotBlank
 	private String patientId;
 
 	@Field("noteText")
+	@NotEmpty(message = "NoteText is mandatory.")
 	private String noteText;
 
 	@Field("dateOfNote")
-	private Date dateOfNote;
+	@Temporal(TemporalType.DATE)
+	private Date dateOfNote = new Date(System.currentTimeMillis());
 
 	public Note() {
 	}

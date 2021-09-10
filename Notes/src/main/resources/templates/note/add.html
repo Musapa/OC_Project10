@@ -43,6 +43,11 @@
 			<form action="#" th:action="@{/note/save/{patientId}(patientId=${patientId})}" th:object="${note}" method="post" class="form-horizontal" style="width: 100%">
 				<div class="form-group">					
 					<div class="col-sm-12">
+						<p class="pstyle_account">Date: <span th:text="*{#dates.format(dateOfNote, 'dd-MMM-yyyy HH:mm')}" style="font-weight: 700;"></span></p>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-12">
 						<p class="pstyle_account">Patient Id: <span th:utext="*{patientId}" style="font-weight: 700;"></span></p>
 					</div>
 				</div>
