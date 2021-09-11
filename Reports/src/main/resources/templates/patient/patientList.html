@@ -71,7 +71,7 @@
 						<td th:text="${patient.address}" class="align-middle"></td>
 						<td th:text="${patient.phone}" class="align-middle"></td>
 						<td>
-							<a class="btn btn-outline-warning btn-sm" th:href="@{/note/list/{patientId}(patientId=${patient.id})}">View Patient's Notes</a>		
+							<a class="btn btn-outline-warning btn-sm" th:href="@{/report/appearances/{patientId}(patientId=${patient.id})}">View Patient's Reports</a>		
 						</td>
 					</tr>
 				</tbody>

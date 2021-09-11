@@ -2,14 +2,14 @@ package com.openclassrooms.ocproject10.domain;
 
 public class Report {
 
-	private String patientId;
+	private Integer patientId;
     private int age;
     private String riskLevel;
 	
-    public String getPatientId() {
+    public Integer getPatientId() {
 		return patientId;
 	}
-	public void setPatientId(String patientId) {
+	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;
 	}
 	public int getAge() {

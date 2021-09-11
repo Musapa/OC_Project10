@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.openclassrooms.ocproject10.domain.Note;
 import com.openclassrooms.ocproject10.domain.Patient;
+import com.openclassrooms.ocproject10.domain.Report;
 import com.openclassrooms.ocproject10.reports.service.ReportServiceImpl;
 
 @RestController
@@ -26,7 +27,7 @@ public class ReportController {
 
 	@Autowired
 	ReportServiceImpl reportService;
-	
+
 	@GetMapping(value = "/patient/list")
 	public ModelAndView getAllPatients(Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -35,28 +36,42 @@ public class ReportController {
 		log.info("LOG: Number of patients on list: " + reportService.getAllPatients().size());
 		return mav;
 	}
-	
+
 	@RequestMapping("api/patient/list")
 	public List<Patient> getAllPatientsApi() {
 		return reportService.getAllPatients();
 	}
-	
+
 	@GetMapping("/note/list/{patientId}")
-	public ModelAndView getAllNotesByPatientId(@PathVariable("patientId") String patientId, Model model) {
+	public ModelAndView getAllNotesByPatientId(@PathVariable("patientId") int patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
-		if (patientId != null) {
+		if (patientId != 0) {
 			List<Note> notes = reportService.findAllNotesByPatientId(patientId);
 			model.addAttribute("noteList", notes);
 			mav.setViewName("note/noteList");
 		}
-		log.info("LOG: Number of notes on list (by patient id): " + reportService.findAllNotesByPatientId(patientId).size());
+		log.info("LOG: Number of notes on list (by patient id): "
+				+ reportService.findAllNotesByPatientId(patientId).size());
 		return mav;
 	}
-		
+
 	@RequestMapping(value = "/api/note/list/{patientId}")
-	public List<Note> getPatientList(@PathVariable("patientId") String patientId) {
+	public List<Note> getPatientList(@PathVariable("patientId") int patientId) {
 		return reportService.findAllNotesByPatientId(patientId);
 	}
-	
-	
+
+	@GetMapping("/report/appearances/{patientId}")
+	public ModelAndView showReportByPatientId(@PathVariable("patientId") Integer patientId, Model model) {
+		ModelAndView mav = new ModelAndView();
+		Patient patient = reportService.findPatientInListOfPatient(patientId);
+		if (patientId != 0) {
+			Report report = reportService.getReports(patientId);
+			model.addAttribute("patient", patient);
+			model.addAttribute("report", report);
+			mav.setViewName("report/appearances");
+		}
+		log.info("GET request received for showReportByPatientId()");
+		return mav;
+	}
+
 }
