@@ -59,6 +59,11 @@ public class ReportController {
 	public List<Note> getPatientList(@PathVariable("patientId") int patientId) {
 		return reportService.findAllNotesByPatientId(patientId);
 	}
+	
+	@RequestMapping(value = "/api/note/report/list/{patientId}")
+	public List<Note> getNumberOfTriggerTermsOnNoteList(@PathVariable("patientId") int patientId) {
+		return reportService.findAllNotesByPatientId(patientId);
+	}
 
 	@GetMapping("/report/appearances/{patientId}")
 	public ModelAndView showReportByPatientId(@PathVariable("patientId") Integer patientId, Model model) {

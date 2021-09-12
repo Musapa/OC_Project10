@@ -21,4 +21,6 @@ public interface ReportService {
 
 	int getAge(LocalDate dob);
 
+	List<Note> getNumberOfTriggerTermsOnNoteList(int patientId);
+
 }

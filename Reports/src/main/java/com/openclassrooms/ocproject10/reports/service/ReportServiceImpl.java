@@ -66,6 +66,15 @@ public class ReportServiceImpl implements ReportService {
 				});
 		return response.getBody();
 	}
+	
+	@Override
+	public List<Note> getNumberOfTriggerTermsOnNoteList(int patientId) {
+		ResponseEntity<List<Note>> response = restTemplateReport().exchange(
+				getNotesUrl() + "/api/note/report/list/" + patientId, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Note>>() {
+				});
+		return response.getBody();
+	}
 
 	private String getNotesUrl() {
 		String url = env.getProperty("NOTES_URL");
