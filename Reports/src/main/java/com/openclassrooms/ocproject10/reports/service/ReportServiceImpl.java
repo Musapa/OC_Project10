@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -76,9 +77,11 @@ public class ReportServiceImpl implements ReportService {
 	
 	private List<String> triggerTerms = Arrays.asList("hemoglobina1c", "microalbumin", "bodyheight", "bodyweight",
 			"smoker", "abnormal", "cholesterol", "dizziness", "relapse", "reaction", "antibodies");
-
+	
+	@Override
 	public int getNumberOfTriggerTermsOnNoteList(List<Note> noteList) {
-		return 7;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override

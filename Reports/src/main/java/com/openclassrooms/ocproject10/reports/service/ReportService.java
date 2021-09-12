@@ -15,9 +15,9 @@ public interface ReportService {
 
 	List<Note> findAllNotesByPatientId(int patientId);
 
-	Report getReports(int patientId);
-
 	int getNumberOfTriggerTermsOnNoteList(List<Note> noteList);
+	
+	Report getReports(int patientId);
 
 	int getAge(LocalDate dob);
 

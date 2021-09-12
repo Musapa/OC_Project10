@@ -18,24 +18,25 @@ import com.openclassrooms.ocproject10.notes.controller.NoteController;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
 @Service("noteService")
-public class NoteServiceImpl implements NoteService{
-	
+public class NoteServiceImpl implements NoteService {
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private Environment env;
-	
+
 	@Autowired
 	private NoteRepository noteRepository;
 
 	@Override
 	public List<Patient> getAllPatients() {
-		ResponseEntity<List<Patient>> response = restTemplate
-				.exchange(getPatientsUrl() + "api/patient/list", HttpMethod.GET, null,new ParameterizedTypeReference<List<Patient>>() {});
+		ResponseEntity<List<Patient>> response = restTemplate.exchange(getPatientsUrl() + "api/patient/list",
+				HttpMethod.GET, null, new ParameterizedTypeReference<List<Patient>>() {
+				});
 		return response.getBody();
 	}
-	
+
 	private String getPatientsUrl() {
 		String url = env.getProperty("PATIENTS_URL");
 		if (url == null) {
@@ -43,13 +44,12 @@ public class NoteServiceImpl implements NoteService{
 		}
 		return url;
 	}
-	
-	
+
 	@Override
 	public List<Note> findAllNotesByPatientId(String patientId) {
 		return noteRepository.findNotesByPatientId(patientId);
 	}
-	
+
 	@Override
 	public Note findNoteByPatientId(String patientId) {
 		Optional<Note> noteOptional = noteRepository.findById(patientId);
@@ -58,27 +58,33 @@ public class NoteServiceImpl implements NoteService{
 		}
 		return null;
 	}
-	
+
 	public Note createNote(Note note) {
 		return noteRepository.save(note);
 	}
-	
-    @Override
-    public void updateNote(Note note) {
-        Optional<Note> noteOptional = noteRepository.findById(note.getId());
-        if (noteOptional.isPresent()) {
-            noteRepository.save(note);
-        }
-    }
-	
+
 	@Override
-    public void deleteNote(String noteId) {
-        Optional<Note> noteOptional = noteRepository.findById(noteId);
-        if (noteOptional.isPresent()) {
-            noteRepository.delete(noteOptional.get());
-        } else {
-            throw new NoSuchElementException("Something is wrong");        
-        }
-    }
-	
+	public void updateNote(Note note) {
+		Optional<Note> noteOptional = noteRepository.findById(note.getId());
+		if (noteOptional.isPresent()) {
+			noteRepository.save(note);
+		}
+	}
+
+	@Override
+	public void deleteNote(String noteId) {
+		Optional<Note> noteOptional = noteRepository.findById(noteId);
+		if (noteOptional.isPresent()) {
+			noteRepository.delete(noteOptional.get());
+		} else {
+			throw new NoSuchElementException("Something is wrong");
+		}
+	}
+
+	@Override
+	public List<Note> getNumberOfTriggerTermsOnNoteList(String patientId) {
+		List<Note> note = noteRepository.findNotesByPatientId(patientId);
+		return note;
+	}
+
 }
