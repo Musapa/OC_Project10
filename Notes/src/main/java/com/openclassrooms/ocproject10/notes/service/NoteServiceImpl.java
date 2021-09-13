@@ -1,5 +1,6 @@
 package com.openclassrooms.ocproject10.notes.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -82,9 +83,20 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public List<Note> getNumberOfTriggerTermsOnNoteList(String patientId) {
-		List<Note> note = noteRepository.findNotesByPatientId(patientId);
-		return note;
+	public int getNumberOfTriggerTermsOnNoteList(String patientId) {
+		List<Note> notes = noteRepository.findNotesByPatientId(patientId);
+		int triggerTermCount = 0;
+		List<String> triggerTerms = Arrays.asList("HemoglobinA1C", "Microalbumin", "Body Height", "Body Weight", "Smoker",
+				"Abnormal", "Cholesterol", "Dizziness", "Relapse", "Reaction", "Antibodies");
+
+		for (Note note : notes) {
+			for (String triggerTerm : triggerTerms) {
+				if (note.getNoteText().contains(triggerTerm)) {
+					triggerTermCount++;
+				}
+			}
+		}
+		return triggerTermCount;
 	}
 
 }

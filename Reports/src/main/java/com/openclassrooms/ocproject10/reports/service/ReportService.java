@@ -14,13 +14,11 @@ public interface ReportService {
 	Patient findPatientInListOfPatient(int patientId);
 
 	List<Note> findAllNotesByPatientId(int patientId);
-
-	int getNumberOfTriggerTermsOnNoteList(List<Note> noteList);
+	
+	int getNumberOfTriggerTermsOnNoteList(int patientId);
 	
 	Report getReports(int patientId);
 
 	int getAge(LocalDate dob);
-
-	List<Note> getNumberOfTriggerTermsOnNoteList(int patientId);
 
 }

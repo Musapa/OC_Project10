@@ -2,9 +2,7 @@ package com.openclassrooms.ocproject10.reports.service;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +20,7 @@ import com.openclassrooms.ocproject10.reports.controller.ReportController;
 
 @Service("reportService")
 public class ReportServiceImpl implements ReportService {
-	
+
 	@Bean
 	public RestTemplate restTemplateReport() {
 		return new RestTemplate();
@@ -38,17 +36,17 @@ public class ReportServiceImpl implements ReportService {
 				});
 		return response.getBody();
 	}
-	
+
 	@Override
-    public Patient findPatientInListOfPatient(int patientId) {
-        List<Patient> patientsList = getAllPatients();
-        for (Patient patient : patientsList) {
-            if (patient.getId().equals(patientId)) {
-                return patient;
-            }
-        }
-        return null;
-    }
+	public Patient findPatientInListOfPatient(int patientId) {
+		List<Patient> patientsList = getAllPatients();
+		for (Patient patient : patientsList) {
+			if (patient.getId().equals(patientId)) {
+				return patient;
+			}
+		}
+		return null;
+	}
 
 	private String getPatientsUrl() {
 		String url = env.getProperty("PATIENTS_URL");
@@ -68,10 +66,10 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public List<Note> getNumberOfTriggerTermsOnNoteList(int patientId) {
-		ResponseEntity<List<Note>> response = restTemplateReport().exchange(
+	public int getNumberOfTriggerTermsOnNoteList(int patientId) {
+		ResponseEntity<Integer> response = restTemplateReport().exchange(
 				getNotesUrl() + "/api/note/report/list/" + patientId, HttpMethod.GET, null,
-				new ParameterizedTypeReference<List<Note>>() {
+				new ParameterizedTypeReference<Integer>() {
 				});
 		return response.getBody();
 	}
@@ -83,21 +81,11 @@ public class ReportServiceImpl implements ReportService {
 		}
 		return url;
 	}
-	
-	private List<String> triggerTerms = Arrays.asList("hemoglobina1c", "microalbumin", "bodyheight", "bodyweight",
-			"smoker", "abnormal", "cholesterol", "dizziness", "relapse", "reaction", "antibodies");
-	
-	@Override
-	public int getNumberOfTriggerTermsOnNoteList(List<Note> noteList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public Report getReports(int patientId) {
 		Patient patient = findPatientInListOfPatient(patientId);
-		List<Note> noteList = findAllNotesByPatientId(patientId);
-		int appearances = getNumberOfTriggerTermsOnNoteList(noteList);
+		int appearances = getNumberOfTriggerTermsOnNoteList(patientId);
 		String riskLevel;
 		int age = getAge(patient.getDob());
 		String sex = patient.getSex();
@@ -115,10 +103,10 @@ public class ReportServiceImpl implements ReportService {
 		} else if (appearances == 5 && age < 30 && sex.equals("Male")) {
 			riskLevel = "Early Onset";
 		} else if (appearances == 6 && age < 30) {
-            riskLevel = "Early Onset";
+			riskLevel = "Early Onset";
 		} else if (appearances == 7 && age < 30 && sex.equals("Female")) {
 			riskLevel = "Early Onset";
-		} else if (appearances >= 8 && age >= 30 && age < 30) {
+		} else if (appearances >= 8) {
 			riskLevel = "Early Onset";
 		} else {
 			riskLevel = "No risk level";

@@ -146,7 +146,7 @@ public class NoteController {
 	}
 	
 	@GetMapping(value = "/api/note/report/list/{patientId}", produces = "application/json")
-	public ResponseEntity<List<Note>> getNumberOfTriggerTermsOnNoteList(@PathVariable("patientId") String patientId) {
+	public ResponseEntity<Integer> getNumberOfTriggerTermsOnNoteList(@PathVariable("patientId") String patientId) {
 		return ResponseEntity.status(HttpStatus.OK).body(noteService.getNumberOfTriggerTermsOnNoteList(patientId));
 	}
 }

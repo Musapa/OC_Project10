@@ -19,6 +19,6 @@ public interface NoteService {
 	
 	void deleteNote(String noteId);
 
-	List<Note> getNumberOfTriggerTermsOnNoteList(String patientId);
+	int getNumberOfTriggerTermsOnNoteList(String patientId);
 	
 }

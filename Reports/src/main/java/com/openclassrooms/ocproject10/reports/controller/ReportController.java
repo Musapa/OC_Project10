@@ -59,11 +59,6 @@ public class ReportController {
 	public List<Note> getPatientList(@PathVariable("patientId") int patientId) {
 		return reportService.findAllNotesByPatientId(patientId);
 	}
-	
-	@RequestMapping(value = "/api/note/report/list/{patientId}")
-	public List<Note> getNumberOfTriggerTermsOnNoteList(@PathVariable("patientId") int patientId) {
-		return reportService.findAllNotesByPatientId(patientId);
-	}
 
 	@GetMapping("/report/appearances/{patientId}")
 	public ModelAndView showReportByPatientId(@PathVariable("patientId") Integer patientId, Model model) {
@@ -75,7 +70,7 @@ public class ReportController {
 			model.addAttribute("report", report);
 			mav.setViewName("report/appearances");
 		}
-		log.info("GET request received for showReportByPatientId()");
+		log.info("LOG: Show reportByPatientId");
 		return mav;
 	}
 
