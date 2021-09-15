@@ -40,13 +40,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.ocproject10.domain.Note;
 import com.openclassrooms.ocproject10.domain.Patient;
-import com.openclassrooms.ocproject10.notes.NotesApplication;
 import com.openclassrooms.ocproject10.notes.repository.NoteRepository;
 
 @AutoConfigureMockMvc
 @AutoConfigureDataMongo
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = NotesApplication.class)
+@SpringBootTest
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class NoteControllerTest {
 
