@@ -57,21 +57,21 @@ public class ReportControllerTest {
 
 	@Autowired
 	RestTemplate restTemplate;
-	
+
 	private MockRestServiceServer mockServer;
 
 	@Before
 	public void setupMockmvc() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
 	}
-	
+
 	@Before
 	public void init() {
 		mockServer = MockRestServiceServer.createServer(restTemplate);
 	}
-	
+
 	static private final String PATIENTID = "1";
-	
+
 	@Before
 	public void createPatientNotes() {
 		Note note = new Note();
@@ -79,65 +79,73 @@ public class ReportControllerTest {
 		note.setNoteText("Testing note text");
 		note.setPatientId(PATIENTID);
 	}
-	
+
 	@Before
 	public void createPatientReport() {
 		Report report = new Report();
 		report.setAge(33);
 		report.setRiskLevel("Early Onset");
 	}
-	
+
 	@Test
 	public void getAllPatients() throws Exception {
 		Patient patient = new Patient();
 		String familyName = "Ferguson";
 		List<Patient> patients = new ArrayList<>();
-		
+
 		patient.setFamilyName(familyName);
 		patients.add(patient);
-		
+
 		String inputJson = objectMapper.writeValueAsString(patients);
-		
-		mockServer.expect(ExpectedCount.twice(),requestTo(new URI(ReportController.PATIENTSURL + "api/patient/list"))).andExpect(method(HttpMethod.GET))
+
+		mockServer.expect(ExpectedCount.twice(), requestTo(new URI(ReportController.PATIENTSURL + "api/patient/list")))
+				.andExpect(method(HttpMethod.GET))
 				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
 
 		MvcResult result = mockMvc.perform(get("/patient/list")).andExpect(view().name("patient/patientList"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
-		
+
 		mockServer.verify();
 
 		String content = result.getResponse().getContentAsString();
 		System.out.println("Content" + content);
-		
+
 		int foundPatient = content.indexOf("Ferguson");
 		assertNotEquals("Cannot find patient", foundPatient, -1);
 	}
-	
+
 	@Test
 	public void getAllNotesByPatientId() throws Exception {
 		Note note = new Note();
 		String noteText = "Test Note Text";
 		List<Note> notes = new ArrayList<>();
-		
+
 		note.setNoteText(noteText);
 		notes.add(note);
-		
+
 		String inputJson = objectMapper.writeValueAsString(notes);
-		
-		mockServer.expect(ExpectedCount.twice(),requestTo(new URI(ReportController.NOTESURL + "api/note/list/" + PATIENTID))).andExpect(method(HttpMethod.GET))
+
+		mockServer
+				.expect(ExpectedCount.twice(),
+						requestTo(new URI(ReportController.NOTESURL + "api/note/list/" + PATIENTID)))
+				.andExpect(method(HttpMethod.GET))
 				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
 
 		MvcResult result = mockMvc.perform(get("/note/list/1")).andExpect(view().name("note/noteList"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
-		
+
 		mockServer.verify();
 
 		String content = result.getResponse().getContentAsString();
 		System.out.println("Content" + content);
-		
+
 		int foundNote = content.indexOf("Test Note Text");
 		assertNotEquals("Cannot find note", foundNote, -1);
 	}
-	
+
+	@Test
+	public void showReportByPatientId() throws Exception {
+
+	}
 
 }
