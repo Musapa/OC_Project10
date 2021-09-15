@@ -5,7 +5,6 @@ import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -20,18 +19,17 @@ import com.openclassrooms.ocproject10.reports.controller.ReportController;
 
 @Service("reportService")
 public class ReportServiceImpl implements ReportService {
-
-	@Bean
-	public RestTemplate restTemplateReport() {
-		return new RestTemplate();
-	}
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private Environment env;
 
+
 	@Override
 	public List<Patient> getAllPatients() {
-		ResponseEntity<List<Patient>> response = restTemplateReport().exchange(getPatientsUrl() + "api/patient/list",
+		ResponseEntity<List<Patient>> response = restTemplate.exchange(getPatientsUrl() + "api/patient/list",
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<Patient>>() {
 				});
 		return response.getBody();
@@ -58,7 +56,7 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public List<Note> findAllNotesByPatientId(int patientId) {
-		ResponseEntity<List<Note>> response = restTemplateReport().exchange(
+		ResponseEntity<List<Note>> response = restTemplate.exchange(
 				getNotesUrl() + "api/note/list/" + patientId, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Note>>() {
 				});
@@ -67,7 +65,7 @@ public class ReportServiceImpl implements ReportService {
 	
 	@Override
 	public int getNumberOfTriggerTermsOnNoteList(int patientId) {
-		ResponseEntity<Integer> response = restTemplateReport().exchange(
+		ResponseEntity<Integer> response = restTemplate.exchange(
 				getNotesUrl() + "/api/note/report/list/" + patientId, HttpMethod.GET, null,
 				new ParameterizedTypeReference<Integer>() {
 				});

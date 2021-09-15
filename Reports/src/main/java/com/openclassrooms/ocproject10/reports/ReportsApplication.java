@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @ComponentScan({"com.openclassrooms.ocproject10.reports", "com.openclassrooms.ocproject10.domain"})
-@EnableJpaRepositories(basePackages = {"com.openclassrooms.ocproject10.patients.repository"})
+@EnableJpaRepositories(basePackages = {"com.openclassrooms.ocproject10.patients.repository", "com.openclassrooms.ocproject10.notes.repository"})
 @EntityScan("com.openclassrooms.ocproject10.domain")
 public class ReportsApplication {
 

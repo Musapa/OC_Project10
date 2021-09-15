@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,11 +36,6 @@ public class ReportController {
 		return mav;
 	}
 
-	@RequestMapping("api/patient/list")
-	public List<Patient> getAllPatientsApi() {
-		return reportService.getAllPatients();
-	}
-
 	@GetMapping("/note/list/{patientId}")
 	public ModelAndView getAllNotesByPatientId(@PathVariable("patientId") int patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
@@ -53,11 +47,6 @@ public class ReportController {
 		log.info("LOG: Number of notes on list (by patient id): "
 				+ reportService.findAllNotesByPatientId(patientId).size());
 		return mav;
-	}
-
-	@RequestMapping(value = "/api/note/list/{patientId}")
-	public List<Note> getPatientList(@PathVariable("patientId") int patientId) {
-		return reportService.findAllNotesByPatientId(patientId);
 	}
 
 	@GetMapping("/report/appearances/{patientId}")
