@@ -50,7 +50,7 @@ public class ReportController {
 	}
 
 	@GetMapping("/report/appearances/{patientId}")
-	public ModelAndView showReportByPatientId(@PathVariable("patientId") Integer patientId, Model model) {
+	public ModelAndView showReportByPatientId(@PathVariable("patientId") int patientId, Model model) {
 		ModelAndView mav = new ModelAndView();
 		Patient patient = reportService.findPatientInListOfPatient(patientId);
 		if (patientId != 0) {

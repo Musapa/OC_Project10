@@ -72,21 +72,6 @@ public class ReportControllerTest {
 
 	static private final String PATIENTID = "1";
 
-	@Before
-	public void createPatientNotes() {
-		Note note = new Note();
-		note.setId("11");
-		note.setNoteText("Testing note text");
-		note.setPatientId(PATIENTID);
-	}
-
-	@Before
-	public void createPatientReport() {
-		Report report = new Report();
-		report.setAge(33);
-		report.setRiskLevel("Early Onset");
-	}
-
 	@Test
 	public void getAllPatients() throws Exception {
 		Patient patient = new Patient();
@@ -145,6 +130,40 @@ public class ReportControllerTest {
 
 	@Test
 	public void showReportByPatientId() throws Exception {
+		Patient patient = new Patient();
+		String familyName = "Ferguson";
+		int id = 1;
+		List<Patient> patients = new ArrayList<>();
+
+		patient.setId(id);
+		patient.setFamilyName(familyName);
+		patients.add(patient);
+
+		Report report = new Report();
+
+		report.setPatientId(1);
+		report.setAge(50);
+		report.setRiskLevel("In danger");
+
+		String inputJson = objectMapper.writeValueAsString(patients);
+
+		MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
+
+		mockServer.expect(requestTo(new URI(ReportController.PATIENTSURL + "api/patient/list")))
+				.andExpect(method(HttpMethod.GET))
+				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
+
+		mockServer.expect(requestTo(new URI(ReportController.NOTESURL + "api/note/report/list/" + PATIENTID)))
+				.andExpect(method(HttpMethod.GET))
+				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
+		
+		MvcResult result = mockMvc.perform(get("/report/appearances/" + PATIENTID)).andExpect(view().name("report/appearances"))
+				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
+
+		mockServer.verify();
+		
+		String content = result.getResponse().getContentAsString();
+		System.out.println("Content" + content);
 
 	}
 
