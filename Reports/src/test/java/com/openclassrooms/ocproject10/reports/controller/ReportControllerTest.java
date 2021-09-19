@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,26 +137,28 @@ public class ReportControllerTest {
 		List<Patient> patients = new ArrayList<>();
 
 		patient.setId(id);
+		patient.setDob(LocalDate.of(1980, 1, 1));
 		patient.setFamilyName(familyName);
 		patients.add(patient);
 
 		Report report = new Report();
 
 		report.setPatientId(1);
-		report.setAge(50);
-		report.setRiskLevel("In danger");
+		report.setAge(41);
+		report.setRiskLevel("Early Onset");
 
-		String inputJson = objectMapper.writeValueAsString(patients);
+		String inputJSON = objectMapper.writeValueAsString(patients);
 
-		MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
-
-		mockServer.expect(requestTo(new URI(ReportController.PATIENTSURL + "api/patient/list")))
+		mockServer.expect(ExpectedCount.manyTimes(), requestTo(new URI(ReportController.PATIENTSURL + "api/patient/list")))
 				.andExpect(method(HttpMethod.GET))
-				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
+				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJSON));
+		
+		int appearances = 8;
+		String appearanceJSON = objectMapper.writeValueAsString(appearances);
 
-		mockServer.expect(requestTo(new URI(ReportController.NOTESURL + "api/note/report/list/" + PATIENTID)))
+		mockServer.expect(ExpectedCount.manyTimes(), requestTo(new URI(ReportController.NOTESURL + "api/note/report/list/" + PATIENTID)))
 				.andExpect(method(HttpMethod.GET))
-				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(inputJson));
+				.andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(appearanceJSON ));
 		
 		MvcResult result = mockMvc.perform(get("/report/appearances/" + PATIENTID)).andExpect(view().name("report/appearances"))
 				.andExpect(model().errorCount(0)).andExpect(status().isOk()).andReturn();
