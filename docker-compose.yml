@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  reports:
+    image: 'reports:latest'
+    build:
+      context: ./reports
+    container_name: reports
+    ports:
+      - 8080:8080
+    environment:
+      - PATINTS_URL=http://gps:8081
+      - NOTES_URL=http://rewards:8082
+      
+  patients:
+    image: 'patients:latest'
+    build:
+      context: ./patients
+    container_name: patients
+    ports:
+      - 8081:8081
+    environment:
+      - MYSQL_HOST=mysql
+
+  notes:
+    image: 'notes:latest'
+    build:
+      context: ./notes
+    container_name: notes
+    ports:
+      - 8082:8082
+    environment:
+      - MONGO_HOST=mongodb
+      
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+        - 3306:3306
+    environment:
+        MYSQL_ROOT_USER: root
+        MYSQL_ROOT_PASSWORD: Musapa1990..
+        MYSQL_DATABASE: project_10
+        
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+        - 27017:27017
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: <admin-user>
+        MONGO_INITDB_ROOT_PASSWORD: <admin-password>
+        MONGO_INITDB_DATABASE: project_10
+
