@@ -6,7 +6,7 @@ FROM openjdk:12-jdk-alpine
 ARG JAR_FILE
 
 # COPY will copy the application jar file into the image
-COPY ./build/libs/Reports-1.0-SNAPSHOT.jar app.jar
+COPY target/Reports-0.0.1-SNAPSHOT.jar app.jar
 
 # CMD tells the Docker what command to run when we start a container of this image. In our case, we just want to run java specifying the jar file.
 ENTRYPOINT ["java","-jar","/app.jar"]
