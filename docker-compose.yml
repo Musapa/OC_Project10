@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     environment:
-      - MYSQL_HOST=mysql
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/database?autoReconnect=true&useSSL=false
 
   notes:
     image: 'notes:latest'
@@ -43,9 +43,7 @@ services:
         MYSQL_DATABASE: project_10
         MYSQL_ROOT_USER: root
         MYSQL_ROOT_PASSWORD: Musapa1990..
-    command: --innodb --init-file /data/application/init.sql
-    volumes:
-        - ./init.sql:/data/application/init.sql
+        MYSQL_PASSWORD: Musapa1990..        
         
   mongodb:
     image: mongo:latest
