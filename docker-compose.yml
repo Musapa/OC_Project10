@@ -20,9 +20,9 @@ services:
     ports:
       - 8081:8081
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/project_10?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/project_10?autoReconnect=true&useSSL=false
     depends_on:
-      - docker-mysql
+      - db-mysql
 
   notes:
     image: 'notes:latest'
@@ -34,7 +34,7 @@ services:
     environment:
       - MONGO_HOST=mongodb
       
-  docker-mysql:
+  db-mysql:
     image: mysql:latest
     container_name: mysql
     ports:
