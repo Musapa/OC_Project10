@@ -9,7 +9,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      - PATINTS_URL=http://gps:8081
+      - PATIENTS_URL=http://gps:8081
       - NOTES_URL=http://rewards:8082
       
   patients:
@@ -20,7 +20,7 @@ services:
     ports:
       - 8081:8081
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/project_10?autoReconnect=true&useSSL=false
+      - MYSQL_HOST=db-mysql
     depends_on:
       - db-mysql
 
@@ -38,7 +38,10 @@ services:
     image: mysql:latest
     container_name: mysql
     ports:
-        - 3307:3306
+        - 3306:3306
+    command: --innodb --init-file /data/application/data.sql
+    volumes:
+        - ./init.sql:/data/application/data.sql
     environment:
         MYSQL_DATABASE: project_10
         MYSQL_ROOT_USER: root
