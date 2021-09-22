@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2'
 
 services:
   reports:
@@ -39,9 +39,9 @@ services:
     container_name: mysql
     ports:
         - 3306:3306
-    command: --innodb --init-file /data/application/data.sql
+    command: --innodb --init-file /data/application/init.sql
     volumes:
-        - ./init.sql:/data/application/data.sql
+        - ./init.sql:/data/application/init.sql
     environment:
         MYSQL_DATABASE: project_10
         MYSQL_ROOT_USER: root
