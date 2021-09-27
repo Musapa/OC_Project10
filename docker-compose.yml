@@ -9,8 +9,14 @@ services:
     ports:
       - 8080:8080
     environment:
-      - PATIENTS_URL=http://gps:8081
-      - NOTES_URL=http://rewards:8082
+      - MONGO_HOST=mongodb
+      - PATIENTS_URL=http://patients:8081
+      - NOTES_URL=http://notes:8082
+    depends_on:
+      - mongodb
+      - db-mysql
+      - patients
+      - notes  
       
   patients:
     image: 'patients:latest'
@@ -20,10 +26,11 @@ services:
     ports:
       - 8081:8081
     environment:
+      - MONGO_HOST=mongodb
       - MYSQL_HOST=db-mysql
     depends_on:
-      - db-mysql
       - mongodb
+      - db-mysql
 
   notes:
     image: 'notes:latest'
@@ -34,12 +41,15 @@ services:
       - 8082:8082
     environment:
       - MONGO_HOST=mongodb
+      - PATIENTS_URL=http://patients:8081
     depends_on:
       - mongodb
+      - db-mysql
+      - patients 
       
   db-mysql:
     image: mysql:latest
-    container_name: mysql
+    container_name: db-mysql
     ports:
         - 3306:3306
     command: --innodb --init-file /data/application/init.sql
@@ -53,10 +63,8 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
-    network_mode: host
     restart: always
     ports:
         - 27017:27017
     environment:
         MONGO_INITDB_DATABASE: project_10
-
