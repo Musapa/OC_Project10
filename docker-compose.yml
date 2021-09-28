@@ -10,8 +10,8 @@ services:
       - 8080:8080
     environment:
       - MONGO_HOST=mongodb
-      - PATIENTS_URL=http://patients:8081
-      - NOTES_URL=http://notes:8082
+      - PATIENTS_URL=http://patients:8081/
+      - NOTES_URL=http://notes:8082/
     depends_on:
       - mongodb
       - db-mysql
@@ -41,7 +41,7 @@ services:
       - 8082:8082
     environment:
       - MONGO_HOST=mongodb
-      - PATIENTS_URL=http://patients:8081
+      - PATIENTS_URL=http://patients:8081/
     depends_on:
       - mongodb
       - db-mysql

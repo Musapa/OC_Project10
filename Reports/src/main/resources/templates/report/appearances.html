@@ -45,7 +45,9 @@
 		</div>
 	</nav>	
 	<div class="container col-md-12 mb-2 mt-4">
-		<div class="row">			
+		<div class="row">
+			<div class="col-12 d-flex justify-content-center mt-3 mb-3 list-patientsReports">PATIENT&nbsp;<span th:utext="${patientId}"></span>&nbsp;- report list </div>
+					
 			<form action="#" class="form-horizontal" style="width: 100%">
 				<div class="form-group">
 					<div class="col-sm-12">
@@ -72,11 +74,11 @@
 	</div>
 
 	<style>
-.list-patientsReports {
-	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-	font-size: 30px;
-	color: #ffc107;
-}
+	.list-patientsReports {
+		font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+		font-size: 30px;
+		color: #ffc107;
+	}	
 </style>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
