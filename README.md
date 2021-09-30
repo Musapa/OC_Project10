@@ -3,9 +3,9 @@
 ## Project structure
 Multi-Module Maven project which includes: patients, notes and reports modules.
 
-- Patients - patient demographic (name, age, etc.) information stored in MySQL DB
-- Notes - patient notes stored in Mongo DB
-- Reports - calculates a patient's risk for diabetes based on their demographic and note history
+- Patients (port: 8081)- patient demographic (name, age, etc.) information stored in MySQL DB
+- Notes (port: 8082) - patient notes stored in Mongo DB
+- Reports (port: 8080) - calculates a patient's risk for diabetes based on their demographic and note history
 
 ## Architectural Diagram
 ![](ArchitectureDiagram.png)
